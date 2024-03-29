@@ -171,3 +171,4 @@ ClientBin/
 *.jfm
 *.pfx
 *.publishsettings
+*.DS_Store
