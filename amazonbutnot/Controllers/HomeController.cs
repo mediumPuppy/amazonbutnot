@@ -1,31 +1,45 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using amazonbutnot.Models;
+using Microsoft.AspNetCore.Authorization;
+using amazonbutnot.Models.ViewModels;
 
 namespace amazonbutnot.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private IProductRepository _repo;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(IProductRepository temp)
     {
-        _logger = logger;
+        _repo = temp;
     }
 
-    public IActionResult Index()
+    [Authorize]
+    public IActionResult Index(int pageNum, int CategoryId)
     {
-        return View();
+        int pageSize = 5;
+
+        var Blah = new ProductsListViewModel
+        {
+            Products = _repo.Products
+            .Where(x => CategoryId == 0 || x.CategoryId == CategoryId) // Check if CategoryId is 0 or matches the provided CategoryId
+            .OrderBy(x => x.ProductName)
+            .Skip((pageNum - 1) * pageSize)
+            .Take(pageSize),
+
+
+            PaginationInfo = new PaginationInfo
+            {
+                CurrentPage = pageNum,
+                ItemsPerPage = pageSize,
+                TotalItems = CategoryId == 0 ? _repo.Products.Count() : _repo.Products.Where(x => x.CategoryId == CategoryId).Count()
+            },
+
+            CurrentCategoryId = CategoryId
+        };
+
+        return View("Index", Blah);
     }
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-    }
 }
