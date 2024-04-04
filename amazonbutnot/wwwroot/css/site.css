@@ -20,3 +20,9 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.product-card {
+    height: 300px; /* Adjust the height as needed */
+    overflow: hidden; /* To hide overflowing content */
+}
+
