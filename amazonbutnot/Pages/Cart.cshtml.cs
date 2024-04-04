@@ -45,5 +45,6 @@ namespace amazonbutnot.Pages
             Cart.RemoveLine(Cart.Lines.First(cl => cl.Product.ProductId == productId).Product);
             return RedirectToPage(new { returnUrl = returnUrl });
         }
+
     }
 }
