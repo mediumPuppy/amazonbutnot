@@ -6,16 +6,27 @@
 
 @model Product
 
-<div class="card-1 m-1 p-1">
+
+<div class="card m-1 p-1 product-card">
     <h4>
         @Model.ProductName
+        <span class="badge roundedcard-header-pills bg-primary text-white float-end"><small>$@Model.ProductPrice</small></span>
     </h4>
     <ul>
-        <li>
-            @Model.ProductDescription
-        </li>
-        <li>
-            @Model.ProductPrice
-        </li>
+        <li>Project Type @Model.ProductDescription</li>
+       
     </ul>
+
+    <form id="@Model.ProductId" method="post" asp-page="/Cart">
+        <input type="hidden" asp-for="@Model.ProductId" />
+        <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+        <button type="submit" class="btn-outline-success btn-sm float-end">Add To Cart</button>
+    </form>
+
+
 </div>
+
+@* <div class="col-md-3"> THIS CAN BE ADDED ON THE PAGE WHERE THIS WILL BE IMPLEMENTED
+    <!-- This will make each card take up 1/4th of the page on medium-sized screens and above -->
+    <partial name="ProjectSummary" model="p" />
+</div> *@
