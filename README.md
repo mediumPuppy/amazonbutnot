@@ -37,3 +37,6 @@
     - modeling
     - evaluation
     - deployment of model
+
+    - store recommendations in a db so we don't need an actual saved model
+    - create MLR or classification pipeline deployed with onyx (video of it in LS)
