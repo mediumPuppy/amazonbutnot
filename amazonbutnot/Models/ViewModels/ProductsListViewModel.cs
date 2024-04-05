@@ -5,6 +5,6 @@
         public IQueryable<Product> Products { get; set;}
 
         public PaginationInfo PaginationInfo { get; set; } = new PaginationInfo();
-        public int? CurrentCategoryId { get; internal set; }
+        public string? CurrentCategory { get; internal set; }
     }
 }

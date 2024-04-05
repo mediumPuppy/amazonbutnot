@@ -16,28 +16,28 @@ public class HomeController : Controller
     }
 
     [Authorize]
-    public IActionResult Index(int pageNum, int CategoryId)
+    public IActionResult Index(int pageNum, string? CategoryName)
     {
         int pageSize = 5;
 
         var Blah = new ProductsListViewModel
         {
             Products = _repo.Products
-            .Where(x => CategoryId == 0 || x.CategoryId == CategoryId) // Check if CategoryId is 0 or matches the provided CategoryId
-            .OrderBy(x => x.ProductName)
-            .Skip((pageNum - 1) * pageSize)
-            .Take(pageSize),
-
+        .Where(product => string.IsNullOrEmpty(CategoryName) || product.Category.CategoryName == CategoryName)
+        .OrderBy(product => product.ProductName)
+        .Skip((pageNum - 1) * pageSize)
+        .Take(pageSize),
 
             PaginationInfo = new PaginationInfo
             {
                 CurrentPage = pageNum,
                 ItemsPerPage = pageSize,
-                TotalItems = CategoryId == 0 ? _repo.Products.Count() : _repo.Products.Where(x => x.CategoryId == CategoryId).Count()
+                TotalItems = string.IsNullOrEmpty(CategoryName) ? _repo.Products.Count() : _repo.Products.Count(product => product.Category.CategoryName == CategoryName)
             },
 
-            CurrentCategoryId = CategoryId
+            CurrentCategory = CategoryName
         };
+
 
         return View("Index", Blah);
     }
