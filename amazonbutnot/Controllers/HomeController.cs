@@ -41,5 +41,9 @@ public class HomeController : Controller
 
         return View("Index", Blah);
     }
+    public IActionResult Jefferson()
+    {
+        return View("TableTest");
+    }
 
 }

@@ -55,7 +55,9 @@ app.UseAuthorization();
 app.UseSession();
 
 // Map controllers and Razor pages
-app.MapDefaultControllerRoute();
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 app.Run();
