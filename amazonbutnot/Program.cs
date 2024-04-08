@@ -25,11 +25,13 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
+// set up for google OAUTH
 builder.Services.AddAuthentication().AddGoogle(googleOptions =>
 {
     googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
     googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
 });
+
 builder.Services.AddScoped<IProductRepository, EFProductRepository>();
 
 // Session configuration

@@ -26,3 +26,34 @@ body {
     overflow: hidden; /* To hide overflowing content */
 }
 
+/*jefferson trying to get the cards to look right...*/
+.product-card-jefferson {
+    border: 1px solid #000; /* Outline */
+    border-radius: 10px; 
+    width: 300px; /* Minimum width */
+    height: 380px; /* Fixed height */
+    display: flex;
+    flex-direction: column;
+}
+.header-text {
+    display: inline-block; /* Makes the span respect the max-width property */
+    max-width: 260px; /* Maximum text width before showing ellipsis */
+    white-space: nowrap; /* Keep the text on a single line */
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Display ellipsis for overflow text */
+    vertical-align: top; /* Aligns the text with any inline elements like badges */
+}
+
+.product-image-jefferson {
+    height: 240px; /* Fixed height for the image */
+    object-fit: cover; /* Ensure the image covers the area well without stretching */
+    border-top-left-radius: 10px; /* Maintain rounded corners */
+    border-top-right-radius: 10px; /* Maintain rounded corners */
+}
+/*idk but not working*/
+@media (max-width: 768px) {
+    .product-card-jefferson {
+        min-width: 100%; /* Cards take full width on smaller screens */
+    }
+}
+
