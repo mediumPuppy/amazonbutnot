@@ -27,7 +27,7 @@ namespace amazonbutnot.Pages
         public IActionResult OnPost(int productId, string returnUrl)
         {
             Product prod = _prodRepository.Products
-                .FirstOrDefault(x => x.ProductId == productId);
+                .FirstOrDefault(x => x.product_ID == productId);
 
             if (prod != null)
             {
@@ -42,7 +42,7 @@ namespace amazonbutnot.Pages
 
         public IActionResult OnPostRemove(int productId, string returnUrl)
         {
-            Cart.RemoveLine(Cart.Lines.First(cl => cl.Product.ProductId == productId).Product);
+            Cart.RemoveLine(Cart.Lines.First(cl => cl.Product.product_ID == productId).Product);
             return RedirectToPage(new { returnUrl = returnUrl });
         }
 

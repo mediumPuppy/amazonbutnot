@@ -13,19 +13,31 @@ namespace amazonbutnot.Components
             _prodRepository = temp;
         }
 
- 
+
         public IViewComponentResult Invoke()
         {
             ViewBag.SelectedCategories = RouteData?.Values["CategoryName"];
 
+            // List of all categories
+            var allCategories = new List<string>
+                {
+                    "Part",
+                    "Structure",
+                    "Energy",
+                    "HarryPotter",
+                    "Flight",
+                    "Minifig",
+                    "Character",
+                    "Disney",
+                    "Colorful",
+                    "Animal",
+                    "Vehicle",
+                    "Miscel"
+                };
 
-            var distinctCategories = _prodRepository.Products
-                .Select(product => product.Category.CategoryName)
-                .Distinct();
-                
-
-            return View(distinctCategories);
+            return View(allCategories);
         }
+
 
     }
 }
