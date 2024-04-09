@@ -22,47 +22,84 @@ public class HomeController : Controller
         var Blah = new ProductsListViewModel
         {
             Products = _repo.Products
-        .OrderBy(product => product.ProductName)
+        .OrderBy(product => product.name)
         .Take(pageSize),
 
             
         };
         return View();
     }
+
     public IActionResult Products(int pageNum, string? CategoryName)
     {
         int pageSize = 5;
 
+        var query = _repo.Products.AsQueryable();
+
+        // Apply filtering based on the selected category attribute
+        if (!string.IsNullOrEmpty(CategoryName))
+        {
+            switch (CategoryName)
+            {
+                case "Part":
+                    query = query.Where(product => product.Part == 1);
+                    break;
+                case "Structure":
+                    query = query.Where(product => product.Structure == 1);
+                    break;
+                case "Energy":
+                    query = query.Where(product => product.Energy == 1);
+                    break;
+                case "HarryPotter":
+                    query = query.Where(product => product.HarryPotter == 1);
+                    break;
+                case "Flight":
+                    query = query.Where(product => product.Flight == 1);
+                    break;
+                case "Minifig":
+                    query = query.Where(product => product.Minifig == 1);
+                    break;
+                case "Character":
+                    query = query.Where(product => product.Character == 1);
+                    break;
+                case "Disney":
+                    query = query.Where(product => product.Disney == 1);
+                    break;
+                case "Colorful":
+                    query = query.Where(product => product.Colorful == 1);
+                    break;
+                case "Animal":
+                    query = query.Where(product => product.Animal == 1);
+                    break;
+                case "Vehicle":
+                    query = query.Where(product => product.Vehicle == 1);
+                    break;
+                case "Miscel":
+                    query = query.Where(product => product.Miscel == 1);
+                    break;
+                default:
+                    // Handle unknown category names or provide a default filter
+                    break;
+            }
+        }
+
         var Blah = new ProductsListViewModel
         {
-            Products = _repo.Products
-        .Where(product => string.IsNullOrEmpty(CategoryName) || product.Category.CategoryName == CategoryName)
-        .OrderBy(product => product.ProductName)
-        .Skip((pageNum - 1) * pageSize)
-        .Take(pageSize),
+            Products = query
+                .OrderBy(product => product.name)
+                .Skip((pageNum - 1) * pageSize)
+                .Take(pageSize),
 
             PaginationInfo = new PaginationInfo
             {
                 CurrentPage = pageNum,
                 ItemsPerPage = pageSize,
-                TotalItems = string.IsNullOrEmpty(CategoryName) ? _repo.Products.Count() : _repo.Products.Count(product => product.Category.CategoryName == CategoryName)
+                TotalItems = query.Count()
             },
 
             CurrentCategory = CategoryName
         };
 
-
         return View("Products", Blah);
     }
-    public IActionResult About()
-    {
-        return View("About");
-    }
-    public IActionResult Privacy() 
-    {
-        return View();
-    }
-    
-    
-
 }

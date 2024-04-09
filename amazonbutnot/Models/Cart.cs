@@ -7,7 +7,7 @@
         public virtual void AddItem(Product prod, int quantity)
         {
             CartLine? line = Lines
-                .Where(x => x.Product.ProductId == prod.ProductId)
+                .Where(x => x.Product.product_ID == prod.product_ID)
                 .FirstOrDefault();
 
             //has it already been added to the cart
@@ -25,11 +25,11 @@
             }
         }
 
-        public virtual void RemoveLine(Product prod) => Lines.RemoveAll(x => x.Product.ProductId == prod.ProductId);
+        public virtual void RemoveLine(Product prod) => Lines.RemoveAll(x => x.Product.product_ID == prod.product_ID);
 
         public virtual void Clear() => Lines.Clear();
 
-        public decimal CalculateTotal() => Lines.Sum(x => x.Product.ProductPrice * x.Quantity);
+        public decimal CalculateTotal() => Lines.Sum(x => x.Product.price * x.Quantity);
 
        
 

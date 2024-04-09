@@ -7,17 +7,17 @@
 @model Product
 <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
     <div class="card product-card-jefferson">
-        <img src="https://images.unsplash.com/photo-1712460842246-0a79c9bd48e7" class="card-img-top product-image-jefferson" alt="@Model.ProductName">
+        <img src="https://images.unsplash.com/photo-1712460842246-0a79c9bd48e7" class="card-img-top product-image-jefferson" alt="@Model.name">
         <h4 class="card-header p-1">
-            <span class="header-text">@Model.ProductName</span>
+            <span class="header-text">@Model.name</span>
         </h4>
         <h4 class="text-black text-left m-0">
-            <small class="p-1">$@Model.ProductPrice</small>
+            <small class="p-1">$@Model.price</small>
         </h4>
         <div class="card-body p-1">
-            <h6>@Model.ProductDescription</h6>
-            <form id="@Model.ProductId" method="post" asp-page="/Cart">
-                <input type="hidden" asp-for="@Model.ProductId" />
+            <h6>@Model.description</h6>
+            <form id="@Model.product_ID" method="post" asp-page="/Cart">
+                <input type="hidden" asp-for="@Model.product_ID" />
                 <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
                 <button type="submit" class="btn btn-outline-success btn-sm" style="width: 285px;">Add To Cart</button>
             </form>
