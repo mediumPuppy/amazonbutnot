@@ -19,6 +19,14 @@ namespace amazonbutnot.Data
         }
 
         public DbSet<Product> Products { get; set; }
+
+        public DbSet<Customer> Customers { get; set; }
+
+        public DbSet<Country> Countries { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<LineItem> LineItems { get; set; }
     }
 
 }
