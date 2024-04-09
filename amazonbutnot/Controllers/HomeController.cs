@@ -15,8 +15,21 @@ public class HomeController : Controller
         _repo = temp;
     }
 
-    [Authorize]
-    public IActionResult Index(int pageNum, string? CategoryName)
+    public IActionResult Index()
+    {
+        int pageSize = 5;
+
+        var Blah = new ProductsListViewModel
+        {
+            Products = _repo.Products
+        .OrderBy(product => product.ProductName)
+        .Take(pageSize),
+
+            
+        };
+        return View();
+    }
+    public IActionResult Products(int pageNum, string? CategoryName)
     {
         int pageSize = 5;
 
@@ -39,11 +52,17 @@ public class HomeController : Controller
         };
 
 
-        return View("Index", Blah);
+        return View("Products", Blah);
     }
-    public IActionResult Jefferson()
+    public IActionResult About()
     {
-        return View("TableTest");
+        return View("About");
     }
+    public IActionResult Privacy() 
+    {
+        return View();
+    }
+    
+    
 
 }
