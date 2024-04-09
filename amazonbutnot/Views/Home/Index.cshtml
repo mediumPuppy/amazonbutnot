@@ -5,28 +5,32 @@
 
 @model ProductsListViewModel
 
-<div class="navbar-brand">
-    <h1>
-        Amazon but not.
-    </h1>
-    <br />
-    <h3>
-        From the mind of El Hefferson
-    </h3>
-</div>
 
-<div class="row">
-    <div class="col-9">
-        <div class="row">
-            @foreach (Product p in Model.Products)
-            {
-                <div class="col-md-4 col-lg-4 col-xl-4">
-                    <partial name="ProductSummary" model="p" />
-                </div>
-            }
+
+<div class="jumbotron jumbotron-fluid bg-dark text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <a class="btn btn-primary btn-lg" asp-area="" asp-controller="Home" asp-action="Products">Shop Now</a>
+
+            </div>
+            <div class="col-md-6">
+                <img src="~/img/homepage.png" />
+                
+            </div>
         </div>
     </div>
 </div>
 
+<div class="container">
+   @*  <div class="row">
+        @foreach (Product p in Model.Products)
+        {
+            <div class="col-md-4 col-lg-4 col-xl-4">
+                <partial name="ProductSummary" model="p" />
+            </div>
+        }
+    </div> *@
+</div>
 
 

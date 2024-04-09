@@ -22,6 +22,9 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About Us</a>
+                        </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>
@@ -32,14 +35,12 @@
     </nav>
 </header>
     <div class="row m-1 p-1">
-        <div class="col-3">
-            <vc:filter />
-        </div>
-        <div class="container col-9">
+       
+        
             <main role="main" class="pb-3">
                 @RenderBody()
             </main>
-        </div>
+       
     </div>
 
 <footer class="border-top footer text-muted">
