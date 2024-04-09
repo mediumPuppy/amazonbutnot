@@ -5,25 +5,23 @@
 }
 
 @model Product
-<div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-    <div class="card product-card-jefferson">
-        <img src="https://images.unsplash.com/photo-1712460842246-0a79c9bd48e7" class="card-img-top product-image-jefferson" alt="@Model.name">
-        <h4 class="card-header p-1">
-            <span class="header-text">@Model.name</span>
-        </h4>
-        <h4 class="text-black text-left m-0">
-            <small class="p-1">$@Model.price</small>
-        </h4>
-        <div class="card-body p-1">
-            <h6>@Model.description</h6>
+<div>
+    <div class="card" style="width: 18rem;">
+        <img src="@Model.img_link" class="card-img-top" alt="@Model.name" style="height: 200px; object-fit: cover;">
+        <div class="card-body">
+            <h4 class="card-title fs-5">@Model.name</h4>
+            <h5 class="text-black text-left">$@Model.price</h5>
             <form id="@Model.product_ID" method="post" asp-page="/Cart">
                 <input type="hidden" asp-for="@Model.product_ID" />
+                <a asp-action=ProductDetails asp-controller="Home" asp-route-product_ID="@Model.product_ID" class="btn btn-info">View Details</a>
                 <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
-                <button type="submit" class="btn btn-outline-success btn-sm" style="width: 285px;">Add To Cart</button>
+                <button type="submit" class="btn btn-primary">Add To Cart</button>
             </form>
         </div>
     </div>
 </div>
+
+
 
 
 

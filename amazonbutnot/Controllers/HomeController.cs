@@ -29,10 +29,19 @@ public class HomeController : Controller
         };
         return View();
     }
+    
+    public IActionResult About()
+    {
+        return View();
+    }
+    public IActionResult Privacy()
+    {
+        return View();
+    }
 
     public IActionResult Products(int pageNum, string? CategoryName)
     {
-        int pageSize = 5;
+        int pageSize = 9;
 
         var query = _repo.Products.AsQueryable();
 
@@ -83,6 +92,7 @@ public class HomeController : Controller
             }
         }
 
+
         var Blah = new ProductsListViewModel
         {
             Products = query
@@ -101,5 +111,13 @@ public class HomeController : Controller
         };
 
         return View("Products", Blah);
+        
     }
+
+
+    public IActionResult ProductDetails(int product_ID)
+    {
+        return View("ProductDetails");
+    }
+
 }
