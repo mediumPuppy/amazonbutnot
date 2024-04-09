@@ -56,4 +56,13 @@ body {
         min-width: 100%; /* Cards take full width on smaller screens */
     }
 }
+.banner {
+    background-color: #000;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    text-transform: uppercase;
+}
 
