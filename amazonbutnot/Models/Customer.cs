@@ -12,7 +12,7 @@ namespace amazonbutnot.Models
         public DateTime birth_date { get; set; }
 
         // Foreign key property
-        public byte country_ID { get; set; }
+        public int country_ID { get; set; }
 
         // Navigation property for the related entity
         [ForeignKey("country_ID")]
