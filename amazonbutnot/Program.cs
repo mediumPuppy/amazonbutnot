@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-string modelPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "fraud_model_final.onnx");
+string modelPath = "fraud_model_final.onnx";
 
 builder.Services.AddSingleton<InferenceSession>(sp =>
 {
