@@ -6,5 +6,6 @@
 
         public PaginationInfo PaginationInfo { get; set; } = new PaginationInfo();
         public string? CurrentCategory { get; internal set; }
+        public string? PriceRange { get; set; }
     }
 }

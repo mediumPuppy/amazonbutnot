@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using amazonbutnot.Models;
 using Microsoft.AspNetCore.Authorization;
 using amazonbutnot.Models.ViewModels;
+using System.Drawing.Printing;
 
 namespace amazonbutnot.Controllers;
 
@@ -35,7 +36,7 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult Products(int pageNum, string? CategoryName)
+    public IActionResult Products(int pageNum, string? CategoryName, string? RangePrice)
     {
         int pageSize = 9;
         var query = _repo.Products.AsQueryable();
@@ -54,7 +55,7 @@ public class HomeController : Controller
                 case "Energy":
                     query = query.Where(product => product.Energy == 1);
                     break;
-                case "HarryPotter":
+                case "Harry_Potter":
                     query = query.Where(product => product.Harry_Potter == 1);
                     break;
                 case "Flight":
@@ -86,13 +87,31 @@ public class HomeController : Controller
                     break;
             }
         }
-
+        if (!string.IsNullOrEmpty(RangePrice))
+        {
+            switch (RangePrice)
+            {
+                case "0-25":
+                    query = query.Where(product => product.price >= 0 && product.price <= 25);
+                    break;
+                case "25-50":
+                    query = query.Where(product => product.price > 25 && product.price <= 50);
+                    break;
+                case "50+":
+                    query = query.Where(product => product.price > 50);
+                    break;
+                // Handle other price ranges...
+                default:
+                    // Handle unknown price range or provide a default filter
+                    break;
+            }
+        }
 
         var Blah = new ProductsListViewModel
         {
             Products = query
                 .OrderBy(product => product.name)
-                .Skip((pageNum) * pageSize) //I removed a -1
+                .Skip(pageNum <= 1 ? 0 : (pageNum - 1) * pageSize)
                 .Take(pageSize),
 
             PaginationInfo = new PaginationInfo
@@ -102,7 +121,8 @@ public class HomeController : Controller
                 TotalItems = query.Count()
             },
 
-            CurrentCategory = CategoryName
+            CurrentCategory = CategoryName,
+            PriceRange = RangePrice
         };
 
         return View("Products", Blah);
