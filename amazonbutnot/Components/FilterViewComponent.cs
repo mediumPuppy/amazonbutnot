@@ -18,13 +18,14 @@ namespace amazonbutnot.Components
         {
             ViewBag.SelectedCategories = RouteData?.Values["CategoryName"];
 
+
             // List of all categories
             var allCategories = new List<string>
                 {
                     "Part",
                     "Structure",
                     "Energy",
-                    "HarryPotter",
+                    "Harry_Potter",
                     "Flight",
                     "Minifig",
                     "Character",

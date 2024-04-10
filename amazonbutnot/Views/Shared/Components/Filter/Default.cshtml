@@ -5,11 +5,38 @@
 }
 @model IEnumerable<string>
 
-<div class="d-grid gap-2">
-    <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index" asp-route-categoryName="" asp-route-pageNum="">Home</a>
 
-    @foreach (string c in Model ?? Enumerable.Empty<string>())
-    {
-        <a class="btn @(c == ViewBag.SelectedCateogies ? "btn-primary" : "btn-outline-secondary")" asp-controller="Home" asp-action="Index" asp-route-categoryName="@c" asp-route-pageNum="1">@c</a>
-    }
+<div class="dropdown">
+    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        Categories
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+        @foreach (string c in Model ?? Enumerable.Empty<string>())
+        {
+            <li>
+                <a class="dropdown-item @(c == ViewBag.SelectedCategories ? "active" : "")" asp-controller="Home" asp-action="Products" asp-route-CategoryName="@c" asp-route-pageNum="1">@c</a>
+            </li>
+        }
+    </ul>
 </div>
+@* <div class="mt-3">
+    <label class="form-label">Price Range:</label>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="priceRange" id="price0-25" value="0-25" @(Model.RangePrice == "0-25" ? "checked" : "")>
+        <label class="form-check-label" for="price0-25">
+            $0 - $25
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="priceRange" id="price25-50" value="25-50" @(Model.PriceRange == "25-50" ? "checked" : "")>
+        <label class="form-check-label" for="price25-50">
+            $25 - $50
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="priceRange" id="price50plus" value="50+" @(Model.PriceRange == "50+" ? "checked" : "")>
+        <label class="form-check-label" for="price50plus">
+            $50+
+        </label>
+    </div>
+</div> *@
