@@ -157,29 +157,28 @@ public class AdminController : Controller
     }
     
     
-    // Delete User Below-----------------------
-
-    public async Task<IActionResult> DeleteUser(string roleId)
+// DELETE USER (ADMIN ROLE) BELOW-----------------------
+    [HttpGet]
+    public async Task<IActionResult> DeleteUser(string userId)
     {
-        var role = await _roleManager.FindByIdAsync(roleId);
-        if (role != null)
+        var user = await _userManager.FindByIdAsync(userId);  
+        if (user != null)
         {
-            var result = await _roleManager.DeleteAsync(role);
+            var result = await _userManager.DeleteAsync(user);  
             if (result.Succeeded)
             {
-                // Optionally add a success message or log the deletion
-                return RedirectToAction("UserManagement");
+                TempData["SuccessMessage"] = "Successfully deleted user";
+                return RedirectToAction("UserManagement"); 
             }
             else
             {
-                // Handle the case where deletion fails
-                // You might want to return to the confirmation page with an error message
+                return Content("could not delete"); 
             }
         }
 
         return NotFound();
-
     }
+
     // FIND USER MANAGEMENT BELOW ------------------------------
     public async Task<IActionResult> UserManagement()
     {
@@ -229,15 +228,7 @@ public class AdminController : Controller
                 ModelState.AddModelError("", "User not found.");
                 return View(model);
             }
-
-            // Update the user's name
-            // This assumes you have a method or property to update the name
-            // For example, if storing the name in a claim, you would need to update the claim
-            // This is a placeholder for your implementation
             
-            // UpdateUserName(user, model.Name); // uncomment later jl
-
-            // Update the email if it has changed
             if (user.Email != model.Email)
             {
                 var setEmailResult = await _userManager.SetEmailAsync(user, model.Email);
@@ -262,7 +253,7 @@ public class AdminController : Controller
                 return View(model);
             }
 
-            return RedirectToAction("UserManagement"); // Adjust as necessary
+            return RedirectToAction("UserManagement"); 
         }
         return View(model);
     }
