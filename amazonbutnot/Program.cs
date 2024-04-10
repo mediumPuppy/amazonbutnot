@@ -19,7 +19,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 var productConnectionString = builder.Configuration.GetConnectionString("ProductDbConnection") ??
                        throw new InvalidOperationException("Connection string 'ProductDbConnection' not found.");
 builder.Services.AddDbContext<ProductDbContext>(options =>
-    options.UseSqlite(productConnectionString));
+    options.UseSqlServer(productConnectionString));
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -39,6 +39,21 @@ builder.Services.AddSession(); // Add session services
 
 builder.Services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.ExpireTimeSpan = TimeSpan.FromHours(4);
+    options.LoginPath = "/Account/Login"; // Set the login path
+    options.LogoutPath = "/Account/Logout"; // Set the logout path
+    options.SlidingExpiration = true; // Resets the expiration time on each request if the user is active
+});
+
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.CheckConsentNeeded = context => true; // Requires consent for non-essential cookies
+    options.MinimumSameSitePolicy = SameSiteMode.None;
+});
 
 var app = builder.Build();
 
@@ -62,6 +77,8 @@ app.UseAuthorization();
 
 // Add session middleware
 app.UseSession();
+
+app.UseCookiePolicy();
 
 // Map controllers and Razor pages
 app.MapControllerRoute(

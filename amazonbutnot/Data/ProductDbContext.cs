@@ -15,7 +15,7 @@ namespace amazonbutnot.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // Use the "ProductDbConnection" connection string from appsettings.json
-            optionsBuilder.UseSqlite(_configuration.GetConnectionString("ProductDbConnection"));
+            optionsBuilder.UseSqlServer(_configuration.GetConnectionString("ProductDbConnection"));
         }
 
         public DbSet<Product> Products { get; set; }

@@ -10,10 +10,10 @@ namespace amazonbutnot.Models
         public int transaction_ID { get; set; }
         public Order Order { get; set; }
 
-        public int product_ID { get; set; }
+        public byte product_ID { get; set; }
         public Product Product { get; set; }
 
-        public int qty { get; set; }
-        public int rating { get; set; }
+        public byte qty { get; set; }
+        public byte rating { get; set; }
     }
 }
