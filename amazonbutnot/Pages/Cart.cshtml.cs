@@ -24,10 +24,10 @@ namespace amazonbutnot.Pages
 
         }
 
-        public IActionResult OnPost(int productId, string returnUrl)
+        public IActionResult OnPost(int product_ID, string returnUrl)
         {
             Product prod = _prodRepository.Products
-                .FirstOrDefault(x => x.product_ID == productId);
+                .FirstOrDefault(x => x.product_ID == product_ID);
 
             if (prod != null)
             {
@@ -40,9 +40,9 @@ namespace amazonbutnot.Pages
 
         }
 
-        public IActionResult OnPostRemove(int productId, string returnUrl)
+        public IActionResult OnPostRemove(int product_ID, string returnUrl)
         {
-            Cart.RemoveLine(Cart.Lines.First(cl => cl.Product.product_ID == productId).Product);
+            Cart.RemoveLine(Cart.Lines.First(cl => cl.Product.product_ID == product_ID).Product);
             return RedirectToPage(new { returnUrl = returnUrl });
         }
 
