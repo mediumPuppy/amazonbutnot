@@ -15,14 +15,14 @@ namespace amazonbutnot.Models
         [ForeignKey("customer_ID")]
         public Customer Customer { get; set; }
 
-        public string date { get; set; }
+        public DateTime date { get; set; }
         public string day_of_week { get; set; }
-        public int time { get; set; }
+        public byte time { get; set; }
         public string entry_mode { get; set; }
         public float amount { get; set; }
         public string type_of_transaction { get; set; }
-        public int country_of_transaction { get; set; }
-        public int shipping_address { get; set; }
+        public byte country_of_transaction { get; set; }
+        public byte shipping_address { get; set; }
         public string bank { get; set; }
         public string type_of_card { get; set; }
         public int fraud { get; set; }

@@ -51,7 +51,7 @@ public class HomeController : Controller
                     query = query.Where(product => product.Energy == 1);
                     break;
                 case "HarryPotter":
-                    query = query.Where(product => product.HarryPotter == 1);
+                    query = query.Where(product => product.Harry_Potter == 1);
                     break;
                 case "Flight":
                     query = query.Where(product => product.Flight == 1);
@@ -87,7 +87,7 @@ public class HomeController : Controller
         {
             Products = query
                 .OrderBy(product => product.name)
-                .Skip((pageNum - 1) * pageSize)
+                .Skip((pageNum) * pageSize) //I removed a -1
                 .Take(pageSize),
 
             PaginationInfo = new PaginationInfo
