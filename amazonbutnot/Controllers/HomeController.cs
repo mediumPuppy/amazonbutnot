@@ -17,17 +17,13 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        int pageSize = 5;
 
-        var Blah = new ProductsListViewModel
+        var blah = new ProductsListViewModel
         {
             Products = _repo.Products
-        .OrderBy(product => product.name)
-        .Take(pageSize),
-
-            
+                .Where(x => new[] { 27, 33, 34, 37, 24 }.Contains(x.product_ID))
         };
-        return View();
+        return View(blah);
     }
     
     public IActionResult About()
@@ -42,7 +38,6 @@ public class HomeController : Controller
     public IActionResult Products(int pageNum, string? CategoryName)
     {
         int pageSize = 9;
-
         var query = _repo.Products.AsQueryable();
 
         // Apply filtering based on the selected category attribute
