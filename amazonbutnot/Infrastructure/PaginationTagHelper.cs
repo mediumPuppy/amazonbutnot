@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using amazonbutnot.Models.ViewModels;
+using System;
 
 namespace amazonbutnot.Infrastructure
 {
@@ -12,7 +13,7 @@ namespace amazonbutnot.Infrastructure
     {
         private IUrlHelperFactory urlHelperFactory;
 
-        public PaginationTagHelper (IUrlHelperFactory temp)
+        public PaginationTagHelper(IUrlHelperFactory temp)
         {
             urlHelperFactory = temp;
         }
@@ -38,7 +39,10 @@ namespace amazonbutnot.Infrastructure
 
                 TagBuilder result = new TagBuilder("div");
 
-                for (int i = 1; i <= PageModel.TotalNumPages; i++)
+                int startPage = Math.Max(1, PageModel.CurrentPage - 2);
+                int endPage = Math.Min(PageModel.TotalNumPages, PageModel.CurrentPage + 2);
+
+                for (int i = startPage; i <= endPage; i++)
                 {
                     TagBuilder tag = new TagBuilder("a");
                     PageUrlValues["pageNum"] = i;

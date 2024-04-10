@@ -3,6 +3,10 @@ using amazonbutnot.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.ML.OnnxRuntime;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System.Drawing.Printing;
+using System.Drawing;
 
 namespace amazonbutnot.Controllers;
 
@@ -11,13 +15,17 @@ public class AdminController : Controller
     private readonly IRolesRepository _rolesRepository;
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly UserManager<IdentityUser> _userManager;
+    private IProductRepository _repo;
+    private readonly InferenceSession _session;
 
-    public AdminController(IRolesRepository rolesRepository, RoleManager<IdentityRole> roleManager,UserManager<IdentityUser> userManager)
+    public AdminController(IRolesRepository rolesRepository, RoleManager<IdentityRole> roleManager,UserManager<IdentityUser> userManager, IProductRepository temp, InferenceSession session)
     {
 
         _rolesRepository = rolesRepository;
         _roleManager = roleManager;
         _userManager = userManager;
+        _repo = temp;
+        _session = session;
     }
 
     [HttpGet]
