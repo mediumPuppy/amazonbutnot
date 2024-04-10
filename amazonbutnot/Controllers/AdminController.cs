@@ -155,6 +155,31 @@ public class AdminController : Controller
         return NotFound();
 
     }
+    
+    
+    // Delete User Below-----------------------
+
+    public async Task<IActionResult> DeleteUser(string roleId)
+    {
+        var role = await _roleManager.FindByIdAsync(roleId);
+        if (role != null)
+        {
+            var result = await _roleManager.DeleteAsync(role);
+            if (result.Succeeded)
+            {
+                // Optionally add a success message or log the deletion
+                return RedirectToAction("UserManagement");
+            }
+            else
+            {
+                // Handle the case where deletion fails
+                // You might want to return to the confirmation page with an error message
+            }
+        }
+
+        return NotFound();
+
+    }
     // FIND USER MANAGEMENT BELOW ------------------------------
     public async Task<IActionResult> UserManagement()
     {
