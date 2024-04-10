@@ -3,10 +3,20 @@ using Microsoft.EntityFrameworkCore;
 using amazonbutnot.Data;
 using Microsoft.AspNetCore.Http;
 using amazonbutnot.Models;
+using Microsoft.ML.OnnxRuntime;
+using Microsoft.ML;
+using Microsoft.ML.OnnxRuntime.Tensors;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+string modelPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "fraud_model_final.onnx");
 
+builder.Services.AddSingleton<InferenceSession>(sp =>
+{
+    var session = new InferenceSession(modelPath);
+    return session;
+});
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??

@@ -1,0 +1,89 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+﻿@{
+    ViewData["Title"] = "OrderTestPredictPage";
+    ViewBag.Title = "OrderTestPredict";
+    var result = string.Empty;
+    if (ViewBag.Prediction != null)
+    {
+        // Construct the image path based on the prediction
+        result = $"{ViewBag.Prediction}";
+    }
+}
+
+
+<style>
+    .form-box {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    .form-group {
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+        .form-group label {
+            text-align: right;
+        }
+
+        .form-group input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-group input[type="submit"] {
+            grid-column: 2 / 3;
+            width: auto;
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            .form-group input[type="submit"]:hover {
+                background-color: #0056b3;
+            }
+</style>
+
+<div class="text-center">
+    <h2>Fraudulent Order Prediction</h2>
+
+    <div class="form-box">
+        <form action="/Home/Predict#predictionResult" method="post">
+            <div class="form-group"><label>Time:</label><input type="number" name="time" /></div>
+            <div class="form-group"><label>Amount:</label><input type="number" name="amount" /></div>
+            <div class="form-group"><label>country_ID:</label><input type="number" name="country_ID" /></div>
+            <div class="form-group"><input type="submit" value="Predict" /></div>
+        </form>
+    </div>
+    <div class="text-center" id="predictionResult">
+        @if (ViewBag.Prediction != null)
+        {
+            <h2>Prediction: @ViewBag.Prediction</h2>
+        }
+        @if (!string.IsNullOrEmpty(result))
+        {
+            <div>
+                <img src="@result" alt="Prediction Image" />
+            </div>
+        }
+    </div>
+
+</div>
