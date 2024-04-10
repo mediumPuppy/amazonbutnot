@@ -9,13 +9,13 @@
     <div class="card" style="width: 18rem;">
         <img src="@Model.img_link" class="card-img-top" alt="@Model.name" style="height: 200px; object-fit: cover;">
         <div class="card-body">
-            <h4 class="card-title fs-5">@Model.name</h4>
+            <h4 class="card-title fs-5 single-line-ellipsis">@Model.name</h4>
             <h5 class="text-black text-left">$@Model.price</h5>
             <form id="@Model.product_ID" method="post" asp-page="/Cart">
                 <input type="hidden" asp-for="@Model.product_ID" />
-                <a asp-action=ProductDetails asp-controller="Home" asp-route-product_ID="@Model.product_ID" class="btn btn-info">View Details</a>
+                <a asp-action="ProductDetails" asp-controller="Home" asp-route-product_ID="@Model.product_ID" class="btn btn-subtle-gray">View Details</a>
                 <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
-                <button type="submit" class="btn btn-primary">Add To Cart</button>
+                <button type="submit" class="btn btn-subtle-black">Add To Cart</button>
             </form>
         </div>
     </div>

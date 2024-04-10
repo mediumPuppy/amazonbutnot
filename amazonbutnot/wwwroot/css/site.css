@@ -8,8 +8,27 @@ html {
   }
 }
 
+.single-line-ellipsis {
+    white-space: nowrap; /* Keep the text on a single line */
+    overflow: hidden; /* Hide text that goes beyond the width of the container */
+    text-overflow: ellipsis; /* Add "..." to text that is cut off */
+    max-width: 100%; /* Ensure the text container doesn't exceed its parent's width */
+}
+
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+.btn-subtle-gray {
+    background-color: #f8f9fa; /* Bootstrap's gray-100 for a very light gray, or choose a subtle gray of your preference */
+    color: #343a40; /* Bootstrap's gray-900 for nearly black text */
+    border-color: #f8f9fa; /* Match the border to the background or choose a slightly darker gray for the border */
+}
+
+.btn-subtle-black {
+    background-color: #343a40; /* Bootstrap's gray-900 for a dark gray (nearly black) */
+    color: #ffffff; /* White text */
+    border-color: #343a40; /* Match the border to the background */
 }
 
 html {
