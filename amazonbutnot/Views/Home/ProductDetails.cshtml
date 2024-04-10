@@ -1,47 +1,44 @@
-@using amazonbutnot.Models.ViewModels
-@{
-    ViewData["Title"] = "Home Page";
-}
+@model ProductDetailsViewModel
 
-@model Product
-
-<html>
-<head>
-    <title>Product Details</title>
-    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
-</head>
-<body>
-@* <div class="container mt-5"> *@
-    @* <div class="card" style="width: 100%;"> *@
-    @*     $1$ <img src="@Model.img_Link" class="card-img-top" alt="@Model.name" style="height: 300px; object-fit: cover;"> #1# *@
-    @*     <div class="card-body"> *@
-    @*         $1$ <h1 class="card-title">@Model.name</h1> #1# *@
-    @*         $1$ <h3 class="text-black">@Model.price</h3> #1# *@
-    @*         $1$ <p class="card-text">@Model.description</p> #1# *@
-    @*         $1$ <form method="post" asp-page="/Cart"> #1# *@
-    @*         $1$     <input type="hidden" value="@Model.product_ID" name="product_ID" /> #1# *@
-    @*         $1$     <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" /> #1# *@
-    @*         $1$     <button type="submit" class="btn btn-primary">Add To Cart</button> #1# *@
-    @*         </form> *@
-    @*     </div> *@
-@*     </div> *@
-@* *@
-@*     <!-- Recommended Products Section --> *@
-@*     $1$ <div class="row mt-4"> #1# *@
-@*     $1$     @foreach (var recProduct in new[] { Model.rec1, Model.rec2, Model.rec3 }) #1# *@
-@*     $1$     { #1# *@
-@*     $1$         <div class="col-md-4"> #1# *@
-@*     $1$             <div class="card"> #1# *@
-@*     $1$                 <img src="@recProduct.img_Link" class="card-img-top" alt="@recProduct.name" style="height: 200px; object-fit: cover;"> #1# *@
-@*     $1$                 <div class="card-body"> #1# *@
-@*     $1$                     <h5 class="card-title">@recProduct.name</h5> #1# *@
-@*     $1$                     <p class="card-text">@recProduct.description</p> #1# *@
-@*     $1$                     <a href="@recProduct.link" class="btn btn-primary">View Product</a> #1# *@
-@*     $1$                 </div> #1# *@
-@*     $1$             </div> #1# *@
-@*     $1$         </div> #1# *@
-@*     $1$     } #1# *@
-@*     $1$ </div> #1# *@
-@* </div> *@
-</body>
-</html>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <img src="@Model.SelectedProduct.img_link" class="card-img-top" alt="@Model.SelectedProduct.name" style="height: 300px; object-fit: cover;">
+                <div class="card-body">
+                    <h1 class="card-title">@Model.SelectedProduct.name</h1>
+                    <h3 class="text-black">$@Model.SelectedProduct.price</h3>
+                    <p class="card-text">@Model.SelectedProduct.description</p>
+                    <form method="post" asp-page="/Cart">
+                        <input type="hidden" value="@Model.SelectedProduct.product_ID" name="product_ID" />
+                        <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+                        <button type="submit" class="btn btn-primary">Add To Cart</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h2>Recommended Products</h2>
+            <div class="row">
+                @foreach (var product in Model.RecommendedProducts)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="card" style="width: 100%;">
+                            <img src="@product.img_link" class="card-img-top" alt="@product.name" style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <h4 class="card-title fs-5 single-line-ellipsis">@product.name</h4>
+                                <h5 class="text-black text-left">$@product.price</h5>
+                                <form id="@product.product_ID" method="post" asp-page="/Cart">
+                                    <input type="hidden" asp-for="@product.product_ID" />
+                                    <a asp-action="ProductDetails" asp-controller="Home" asp-route-id="@product.product_ID" class="btn btn-subtle-gray">View Details</a>
+                                    <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+                                    <button type="submit" class="btn btn-subtle-black">Add To Cart</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

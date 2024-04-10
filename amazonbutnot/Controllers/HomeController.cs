@@ -129,9 +129,30 @@ public class HomeController : Controller
 
 
 
-    public IActionResult ProductDetails(int product_ID)
+    public IActionResult ProductDetails(int id)
     {
-        return View("ProductDetails");
+        // Fetch the selected product
+        var selectedProduct = _repo.Products.FirstOrDefault(p => p.product_ID == id);
+
+        if (selectedProduct == null)
+        {
+            // Handle the case where the product is not found
+            return NotFound();
+        }
+
+        // Fetch the recommended products
+        var recommendedProducts = _repo.Products
+            .Where(p => new[] { selectedProduct.rec1, selectedProduct.rec2, selectedProduct.rec3 }.Contains(p.product_ID))
+            .ToList();
+
+        // Create a view model to hold the selected product and recommended products
+        var viewModel = new ProductDetailsViewModel
+        {
+            SelectedProduct = selectedProduct,
+            RecommendedProducts = recommendedProducts
+        };
+
+        return View(viewModel);
     }
 
     [HttpGet]
