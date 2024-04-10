@@ -3,13 +3,66 @@
 *@
 @{
 }
-@model IEnumerable<string>
+@model Filter
 
-<div class="d-grid gap-2">
-    <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index" asp-route-categoryName="" asp-route-pageNum="">Home</a>
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="filters-container">
+                <div class="row mb-2">
+                    <div class="col-md-12">
+                        <!-- Category Dropdown -->
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                Categories
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+                                @foreach (string c in Model.Categories ?? Enumerable.Empty<string>())
+                                {
+                                    <li>
+                                        <a class="dropdown-item @(c == ViewBag.SelectedCategories ? "active" : "")" asp-controller="Home" asp-action="Products" asp-route-CategoryName="@c" asp-route-pageNum="1">@c</a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
-    @foreach (string c in Model ?? Enumerable.Empty<string>())
-    {
-        <a class="btn @(c == ViewBag.SelectedCateogies ? "btn-primary" : "btn-outline-secondary")" asp-controller="Home" asp-action="Index" asp-route-categoryName="@c" asp-route-pageNum="1">@c</a>
-    }
+                <div class="row mb-2">
+                    <div class="col-md-12">
+                        <!-- Color Dropdown -->
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="colorDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                Colors
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="colorDropdown">
+                                @foreach (string color in Model.Colors ?? Enumerable.Empty<string>())
+                                {
+                                    <li>
+                                        <a class="dropdown-item @(color == ViewBag.SelectedColor ? "active" : "")" asp-controller="Home" asp-action="Products" asp-route-CategoryName="@ViewBag.SelectedCategories" asp-route-Color="@color" asp-route-pageNum="1">@color</a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md-12">
+                        <!-- Items per Page Dropdown -->
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="pageSizeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                Items per Page
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="pageSizeDropdown">
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="Products" asp-route-CategoryName="@ViewBag.SelectedCategories" asp-route-Color="@ViewBag.SelectedColor" asp-route-pageNum="1" asp-route-PageSize="5">5</a></li>
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="Products" asp-route-CategoryName="@ViewBag.SelectedCategories" asp-route-Color="@ViewBag.SelectedColor" asp-route-pageNum="1" asp-route-PageSize="10">10</a></li>
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="Products" asp-route-CategoryName="@ViewBag.SelectedCategories" asp-route-Color="@ViewBag.SelectedColor" asp-route-pageNum="1" asp-route-PageSize="20">20</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -8,6 +8,8 @@ using Microsoft.ML.OnnxRuntime;
 using Microsoft.ML.OnnxRuntime.Tensors;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
+using System.Drawing.Printing;
+
 
 namespace amazonbutnot.Controllers;
 
@@ -24,17 +26,13 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        int pageSize = 5;
 
-        var Blah = new ProductsListViewModel
+        var blah = new ProductsListViewModel
         {
             Products = _repo.Products
-        .OrderBy(product => product.name)
-        .Take(pageSize),
-
-            
+                .Where(x => new[] { 27, 33, 34, 37, 24 }.Contains(x.product_ID))
         };
-        return View();
+        return View(blah);
     }
 
     [HttpPost]
@@ -95,10 +93,9 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult Products(int pageNum, string? CategoryName)
+    public IActionResult Products(int pageNum, string? CategoryName, string? Color, int PageSize = 5)
     {
-        int pageSize = 9;
-
+        int pageSize = PageSize;
         var query = _repo.Products.AsQueryable();
 
         // Apply filtering based on the selected category attribute
@@ -115,7 +112,7 @@ public class HomeController : Controller
                 case "Energy":
                     query = query.Where(product => product.Energy == 1);
                     break;
-                case "HarryPotter":
+                case "Harry Potter":
                     query = query.Where(product => product.Harry_Potter == 1);
                     break;
                 case "Flight":
@@ -148,12 +145,17 @@ public class HomeController : Controller
             }
         }
 
+        // Apply filtering based on the selected color
+        if (!string.IsNullOrEmpty(Color))
+        {
+            query = query.Where(product => product.primary_color == Color || product.secondary_color == Color);
+        }
 
         var Blah = new ProductsListViewModel
         {
             Products = query
                 .OrderBy(product => product.name)
-                .Skip((pageNum) * pageSize) //I removed a -1
+                .Skip(pageNum <= 1 ? 0 : (pageNum - 1) * pageSize)
                 .Take(pageSize),
 
             PaginationInfo = new PaginationInfo
@@ -163,12 +165,15 @@ public class HomeController : Controller
                 TotalItems = query.Count()
             },
 
-            CurrentCategory = CategoryName
+            CurrentCategory = CategoryName,
+            SelectedColor = Color,
+            SelectedPageSize = pageSize
+
         };
 
         return View("Products", Blah);
-        
     }
+
 
 
     public IActionResult ProductDetails(int product_ID)

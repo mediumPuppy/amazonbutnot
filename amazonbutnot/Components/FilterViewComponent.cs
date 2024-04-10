@@ -16,27 +16,45 @@ namespace amazonbutnot.Components
 
         public IViewComponentResult Invoke()
         {
-            ViewBag.SelectedCategories = RouteData?.Values["CategoryName"];
+            var selectedCategory = RouteData?.Values["CategoryName"]?.ToString();
+            var selectedColor = Request.Query["Color"].ToString();
 
-            // List of all categories
-            var allCategories = new List<string>
-                {
-                    "Part",
-                    "Structure",
-                    "Energy",
-                    "HarryPotter",
-                    "Flight",
-                    "Minifig",
-                    "Character",
-                    "Disney",
-                    "Colorful",
-                    "Animal",
-                    "Vehicle",
-                    "Miscel"
-                };
+            var primaryColors = _prodRepository.Products
+                .Select(x => x.primary_color)
+                .Distinct()
+                .OrderBy(x => x);
 
-            return View(allCategories);
+            var secondaryColors = _prodRepository.Products
+                .Select(x => x.secondary_color)
+                .Distinct()
+                .OrderBy(x => x);
+
+            var viewModel = new Filter
+            {
+                Categories = new List<string>
+            {
+                "Part",
+                "Structure",
+                "Energy",
+                "Harry Potter",
+                "Flight",
+                "Minifig",
+                "Character",
+                "Disney",
+                "Colorful",
+                "Animal",
+                "Vehicle",
+                "Miscel"
+            },
+                Colors = primaryColors.Union(secondaryColors),
+                
+               
+            };
+
+            return View(viewModel);
         }
+
+
 
 
     }

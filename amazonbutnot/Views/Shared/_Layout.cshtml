@@ -12,7 +12,7 @@
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container-fluid">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">amazonbutnot</a>
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Lego</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -20,13 +20,13 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About Us</a>
                     </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About Us</a>
-                        </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Products">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Account</a>
                     </li>
                 </ul>
                 <partial name="_LoginPartial"/>
@@ -34,9 +34,10 @@
         </div>
     </nav>
 </header>
+
  
        
-        
+<partial name="_CookieConsentPartial" />        
 <main role="main" class="pb-3">
     @RenderBody()
 </main>
@@ -44,125 +45,63 @@
 
     
 <!-- Footer -->
-<footer class="text-center text-lg-start"
-            style="background-color: #F0F0F2; margin-top: auto;">
-    <!-- Grid container -->
+<footer class="text-center text-lg-start" style="background-color: #F0F0F2; margin-top: auto;">
     <div class="container p-4 pb-0">
-        <!-- Section: Links -->
-        <section class="">
-            <!-- Grid row -->
+        <section>
             <div class="row">
-                <!-- Grid column -->
                 <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                    <h6 class="text-uppercase mb-4 font-weight-bold">
-                        Aurora Brickwell Lego's
-                    </h6>
+                    <h6 class="text-uppercase mb-4 font-weight-bold">Aurora Brickwell Lego</h6>
+                    <p>Authorized Distributor of Lego Product.</p>
+                </div>
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">Shopping</h6>
                     <p>
-                        Authorized Distributor of Lego Products
+                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Products">
+                            <i class="fas fa-home mr-3"></i>Products
+                        </a>
+                    </p>
+                     <p>
+                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Products">
+                            <i class="fas fa-home mr-3"></i>Cart
+                        </a>
                     </p>
                 </div>
-                <!-- Grid column -->
-
-                <hr class="w-100 clearfix d-md-none" />
-
-                <!-- Grid column -->
-                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-                    <h6 class="text-uppercase mb-4 font-weight-bold">Shoppping</h6>
-                    <p>
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Products">Products</a>
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">More Info</h6>
+                     <p>
+                        <a class="nav-link text-dark" asp-controller="Home" asp-action="About">
+                            <i class="fas fa-home mr-3"></i>About Us
+                        </a>
                     </p>
-                    <p>
-                        <a >Cart</a>
-                    </p>
-                    
-                </div>
-                <!-- Grid column -->
-
-                <hr class="w-100 clearfix d-md-none" />
-
-                <!-- Grid column -->
-                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
-                    <h6 class="text-uppercase mb-4 font-weight-bold">
-                        More Info
-                    </h6>
-                    <p>
-                        <a>Your Account</a>
-                    </p>
-                    <p>
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy Policy</a>
-                    </p>
-                    <p>
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About Us</a>
+                     <p>
+                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Privacy">
+                            <i class="fas fa-home mr-3"></i>Privacy
+                        </a>
                     </p>
                 </div>
-                <!-- Grid column -->
-
-                <hr class="w-100 clearfix d-md-none" />
-
-                <!-- Grid column -->
-                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
                     <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
                     <p><i class="fas fa-home mr-3"></i> New York, NY 10012, US</p>
-                    <p><i class="fas fa-envelope mr-3"></i> info@gmail.com</p>
+                    <p><i class="fas fa-envelope mr-3"></i> Aurora1@gmail.com</p>
                 </div>
-                <!-- Grid column -->
             </div>
-            <!-- Grid row -->
         </section>
-        <!-- Section: Links -->
 
         <hr class="my-3">
 
-        <!-- Section: Copyright -->
         <section class="p-3 pt-0">
             <div class="row d-flex align-items-center">
-                <!-- Grid column -->
                 <div class="col-md-7 col-lg-8 text-center text-md-start">
-                    <!-- Copyright -->
                     <div class="p-3">
-                        © 2024 Copyright
-                        
+                        © Copyright 2024
                     </div>
-                    <!-- Copyright -->
                 </div>
-                <!-- Grid column -->
-                <!-- Grid column -->
-               @*  <div class="col-md-5 col-lg-4 ml-lg-0 text-center text-md-end">
-                    <!-- Facebook -->
-                    <a class="btn btn-outline-light btn-floating m-1"
-                        class="text-white"
-                        role="button">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-
-                    <!-- Twitter -->
-                    <a class="btn btn-outline-light btn-floating m-1"
-                        class="text-white"
-                        role="button">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-
-                    <!-- Google -->
-                    <a class="btn btn-outline-light btn-floating m-1"
-                        class="text-white"
-                        role="button">
-                        <i class="fab fa-google"></i>
-                    </a>
-
-                    <!-- Instagram -->
-                    <a class="btn btn-outline-light btn-floating m-1"
-                        class="text-white"
-                        role="button">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                </div> *@
-                <!-- Grid column -->
             </div>
         </section>
-        <!-- Section: Copyright -->
     </div>
-    <!-- Grid container -->
 </footer>
+
+
 <!-- Footer -->
 
 

@@ -6,5 +6,7 @@
 
         public PaginationInfo PaginationInfo { get; set; } = new PaginationInfo();
         public string? CurrentCategory { get; internal set; }
+        public string? SelectedColor { get; set; }
+        public int SelectedPageSize { get; set; }
     }
 }

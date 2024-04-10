@@ -32,6 +32,7 @@ builder.Services.AddDbContext<ProductDbContext>(options =>
     options.UseSqlServer(productConnectionString));
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
@@ -42,12 +43,16 @@ builder.Services.AddAuthentication().AddGoogle(googleOptions =>
     googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
 });
 
+// adding products here
 builder.Services.AddScoped<IProductRepository, EFProductRepository>();
+// adding roles here
+builder.Services.AddScoped<IRolesRepository, EfRolesRepository>();
 
 // Session configuration
 builder.Services.AddSession(); // Add session services
 
 builder.Services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
+
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.ConfigureApplicationCookie(options =>
@@ -80,6 +85,7 @@ else
 }
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseCookiePolicy();
 
 app.UseRouting();
 
@@ -88,12 +94,14 @@ app.UseAuthorization();
 // Add session middleware
 app.UseSession();
 
-app.UseCookiePolicy();
-
 // Map controllers and Razor pages
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute(
+    name: "admin",
+    pattern: "{controller=Admin}/{action=AdminIndex}"
+);
 app.MapRazorPages();
 
 app.Run();
