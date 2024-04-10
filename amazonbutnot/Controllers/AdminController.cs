@@ -10,12 +10,14 @@ public class AdminController : Controller
 {
     private readonly IRolesRepository _rolesRepository;
     private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly UserManager<IdentityUser> _userManager;
 
-    public AdminController(IRolesRepository rolesRepository, RoleManager<IdentityRole> roleManager)
+    public AdminController(IRolesRepository rolesRepository, RoleManager<IdentityRole> roleManager,UserManager<IdentityUser> userManager)
     {
 
         _rolesRepository = rolesRepository;
         _roleManager = roleManager;
+        _userManager = userManager;
     }
 
     [HttpGet]
@@ -152,5 +154,91 @@ public class AdminController : Controller
 
         return NotFound();
 
+    }
+    // FIND USER MANAGEMENT BELOW ------------------------------
+    public async Task<IActionResult> UserManagement()
+    {
+        var users = _userManager.Users;
+        var model = new UserManagementViewModel { Users = users };
+        return View(model);
+    }
+    [HttpGet]
+    public IActionResult AddUser() => View();
+
+    [HttpPost]
+    public async Task<IActionResult> AddUser(UserManagementViewModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            var user = new IdentityUser { UserName = model.Email, Email = model.Email };
+            var result = await _userManager.CreateAsync(user, model.Password);
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction("UserManagement");
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+        }
+        return View(model);
+    }
+    [HttpGet]
+    public async Task<IActionResult> EditUser(string userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+        if (user == null) return NotFound();
+
+        var model = new UserManagementViewModel { UserId = user.Id, Email = user.Email };
+        return View(model);
+    }
+    [HttpPost]
+    public async Task<IActionResult> EditUser(UserManagementViewModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            var user = await _userManager.FindByIdAsync(model.UserId);
+            if (user == null)
+            {
+                ModelState.AddModelError("", "User not found.");
+                return View(model);
+            }
+
+            // Update the user's name
+            // This assumes you have a method or property to update the name
+            // For example, if storing the name in a claim, you would need to update the claim
+            // This is a placeholder for your implementation
+            
+            // UpdateUserName(user, model.Name); // uncomment later jl
+
+            // Update the email if it has changed
+            if (user.Email != model.Email)
+            {
+                var setEmailResult = await _userManager.SetEmailAsync(user, model.Email);
+                if (!setEmailResult.Succeeded)
+                {
+                    foreach (var error in setEmailResult.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                    return View(model);
+                }
+            }
+
+            // Save changes to the user
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+                return View(model);
+            }
+
+            return RedirectToAction("UserManagement"); // Adjust as necessary
+        }
+        return View(model);
     }
 }
