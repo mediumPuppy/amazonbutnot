@@ -36,9 +36,9 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult Products(int pageNum, string? CategoryName, string? RangePrice)
+    public IActionResult Products(int pageNum, string? CategoryName, string? Color, int PageSize = 5)
     {
-        int pageSize = 9;
+        int pageSize = PageSize;
         var query = _repo.Products.AsQueryable();
 
         // Apply filtering based on the selected category attribute
@@ -55,7 +55,7 @@ public class HomeController : Controller
                 case "Energy":
                     query = query.Where(product => product.Energy == 1);
                     break;
-                case "Harry_Potter":
+                case "Harry Potter":
                     query = query.Where(product => product.Harry_Potter == 1);
                     break;
                 case "Flight":
@@ -87,24 +87,11 @@ public class HomeController : Controller
                     break;
             }
         }
-        if (!string.IsNullOrEmpty(RangePrice))
+
+        // Apply filtering based on the selected color
+        if (!string.IsNullOrEmpty(Color))
         {
-            switch (RangePrice)
-            {
-                case "0-25":
-                    query = query.Where(product => product.price >= 0 && product.price <= 25);
-                    break;
-                case "25-50":
-                    query = query.Where(product => product.price > 25 && product.price <= 50);
-                    break;
-                case "50+":
-                    query = query.Where(product => product.price > 50);
-                    break;
-                // Handle other price ranges...
-                default:
-                    // Handle unknown price range or provide a default filter
-                    break;
-            }
+            query = query.Where(product => product.primary_color == Color || product.secondary_color == Color);
         }
 
         var Blah = new ProductsListViewModel
@@ -122,12 +109,14 @@ public class HomeController : Controller
             },
 
             CurrentCategory = CategoryName,
-            PriceRange = RangePrice
+            SelectedColor = Color,
+            SelectedPageSize = pageSize
+
         };
 
         return View("Products", Blah);
-        
     }
+
 
 
     public IActionResult ProductDetails(int product_ID)
