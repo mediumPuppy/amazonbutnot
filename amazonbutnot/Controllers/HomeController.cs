@@ -139,6 +139,7 @@ public class HomeController : Controller
     {
         return View();
     }
+    // prediction post bm
     [HttpPost]
     public IActionResult Predict(int time, int amount, int country_ID)
     {
