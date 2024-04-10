@@ -6,5 +6,5 @@
 <form asp-controller="Admin" asp-action="DeleteRole" method="post">
     <input type="hidden" name="roleId" value="@Model.RoleId" />
     <button type="submit" class="btn btn-danger">Confirm</button>
-    <a href="@Url.Action("AdminUsers", "Admin")" class="btn btn-secondary">Cancel</a>
+    <a href="@Url.Action("UserRoles", "Admin")" class="btn btn-secondary">Cancel</a>
 </form>
