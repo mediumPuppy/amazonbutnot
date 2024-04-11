@@ -22,6 +22,8 @@ namespace amazonbutnot.Data
 
         public DbSet<Customer> Customers { get; set; }
 
+        public DbSet<AspNetUser> AspNetUsers { get; set; }
+
         public DbSet<Country> Countries { get; set; }
 
         public DbSet<Order> Orders { get; set; }

@@ -9,6 +9,8 @@ using Microsoft.ML.OnnxRuntime.Tensors;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
 using System.Drawing.Printing;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Http;
 
 
 namespace amazonbutnot.Controllers;
@@ -17,11 +19,13 @@ public class HomeController : Controller
 {
     private IProductRepository _repo;
     private readonly InferenceSession _session;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public HomeController(IProductRepository temp, InferenceSession session)
+    public HomeController(IProductRepository temp, InferenceSession session, IHttpContextAccessor httpContextAccessor)
     {
         _repo = temp;
         _session = session;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public IActionResult Index()
@@ -164,8 +168,57 @@ public class HomeController : Controller
         return View();
     }
     // prediction post bm
+    //[HttpPost]
+    //public IActionResult Predict(int time, int amount, int country_ID)
+    //{
+    //    var country_isUK = 0;
+    //    // Dictionary mapping the numeric prediction to an animal type
+    //    var class_type_dict = new Dictionary<int, string>
+    //    {
+    //        { 0, "Thank you for your purchase!" },
+    //        { 1, "Order in review. Thank you!" }
+    //    };
+
+    //    if (country_ID == 1)
+    //    {
+    //        country_isUK = 1; //if the country_ID is the UK, we change the country_isUK so the input is correct for when we call the model to make a prediction
+    //    }
+
+    //    try
+    //    {
+    //        var input = new List<float> { time, amount, country_isUK };
+    //        var inputTensor = new DenseTensor<float>(input.ToArray(), new[] { 1, input.Count });
+
+    //        var inputs = new List<NamedOnnxValue>
+    //        {
+    //            NamedOnnxValue.CreateFromTensor("float_input", inputTensor)
+    //        };
+
+    //        using (var results = _session.Run(inputs)) // makes the prediction with the inputs from the form
+    //        {
+    //            var prediction = results.FirstOrDefault(item => item.Name == "output_label")?.AsTensor<long>().ToArray();
+    //            if (prediction != null && prediction.Length > 0)
+    //            {
+    //                // Use the prediction to get the animal type from the dictionary
+    //                var fraudStatus = class_type_dict.GetValueOrDefault((int)prediction[0], "Unknown");
+    //                ViewBag.Prediction = fraudStatus;
+    //            }
+    //            else
+    //            {
+    //                ViewBag.Prediction = "Error: Unable to make a prediction.";
+    //            }
+    //        }
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        ViewBag.Prediction = "Error during prediction.";
+    //    }
+
+    //    return View("OrderTestPredict");
+    //}
+
     [HttpPost]
-    public IActionResult Predict(int time, int amount, int country_ID)
+    public IActionResult Predict(int amount)
     {
         var country_isUK = 0;
         // Dictionary mapping the numeric prediction to an animal type
@@ -174,6 +227,18 @@ public class HomeController : Controller
             { 0, "Thank you for your purchase!" },
             { 1, "Order in review. Thank you!" }
         };
+
+        // Get the username of the current logged-in user
+        var username = User.Identity.Name;
+
+        // Retrieve the corresponding customer from the repository
+        var customer = _repo.AspNetUsers.FirstOrDefault(x => x.UserName == username);
+
+        // Access the country_ID attribute of the customer and store it in a variable
+        var country_ID = customer.country_ID;
+        
+
+        var time = DateTime.Now.Hour;
 
         if (country_ID == 1)
         {
@@ -210,7 +275,10 @@ public class HomeController : Controller
             ViewBag.Prediction = "Error during prediction.";
         }
 
-        return View("OrderTestPredict");
+        // Clear the cart after the checkout process
+        _httpContextAccessor.HttpContext.Session.Clear();
+
+        return View("Checkout");
     }
 
 }

@@ -1,6 +1,8 @@
 ﻿@page
 @model amazonbutnot.Pages.CartModel
 @{
+    
+
 }
 <h2>Your Cart</h2>
 
@@ -54,7 +56,12 @@
     <a class="btn btn-subtle-black" href="@Model.ReturnUrl">Return to Products</a>
     
     <!-- New Checkout Button -->
-    <a class="btn btn-subtle-grey" href="@Model.ReturnUrl">Checkout</a>
+
+    <div class="form-box">
+        <form asp-action="Predict" asp-controller="Home" asp-route-amount="@Model.Cart?.CalculateTotal()" method="post">
+                <input type="submit" value="Checkout"/>
+        </form>
+    </div>
 </div>
 
 
