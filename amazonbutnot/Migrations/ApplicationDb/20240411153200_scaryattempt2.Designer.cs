@@ -12,8 +12,8 @@ using amazonbutnot.Data;
 namespace amazonbutnot.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240411040737_aspnetusermigration")]
-    partial class aspnetusermigration
+    [Migration("20240411153200_scaryattempt2")]
+    partial class scaryattempt2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -162,23 +162,6 @@ namespace amazonbutnot.Migrations.ApplicationDb
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("amazonbutnot.Models.Country", b =>
-                {
-                    b.Property<int>("country_ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("country_ID"));
-
-                    b.Property<string>("country_name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("country_ID");
-
-                    b.ToTable("Country");
-                });
-
             modelBuilder.Entity("amazonbutnot.Models.Customer", b =>
                 {
                     b.Property<string>("Id")
@@ -280,8 +263,6 @@ namespace amazonbutnot.Migrations.ApplicationDb
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("country_ID");
-
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
@@ -334,17 +315,6 @@ namespace amazonbutnot.Migrations.ApplicationDb
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("amazonbutnot.Models.Customer", b =>
-                {
-                    b.HasOne("amazonbutnot.Models.Country", "Country")
-                        .WithMany()
-                        .HasForeignKey("country_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Country");
                 });
 #pragma warning restore 612, 618
         }
