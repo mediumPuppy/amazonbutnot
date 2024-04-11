@@ -8,5 +8,6 @@
         public string? CurrentCategory { get; internal set; }
         public string? SelectedColor { get; set; }
         public int SelectedPageSize { get; set; }
+        public IEnumerable<string> Categories { get; set; }
     }
 }

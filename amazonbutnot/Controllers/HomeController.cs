@@ -27,10 +27,13 @@ public class HomeController : Controller
     public IActionResult Index()
     {
 
-        var blah = new ProductsListViewModel
+        
+           
+
+            var blah = new ProductsListViewModel
         {
             Products = _repo.Products
-                .Where(x => new[] { 27, 33, 34, 37, 24 }.Contains(x.product_ID))
+                .Where(x => new[] { 27, 33, 34}.Contains(x.product_ID))
         };
         return View(blah);
     }
