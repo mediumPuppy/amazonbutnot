@@ -1,7 +1,3 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -31,13 +27,15 @@ namespace amazonbutnot.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<Customer> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             UserManager<Customer> userManager,
             IUserStore<Customer> userStore,
             SignInManager<Customer> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -45,31 +43,16 @@ namespace amazonbutnot.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public string ReturnUrl { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public class InputModel
         {
             [Required]
@@ -84,46 +67,34 @@ namespace amazonbutnot.Areas.Identity.Pages.Account
             [Display(Name = "Birth Date")]
             [DataType(DataType.Date)]
             public DateTime birth_date { get; set; }
-            
+
             [Required]
             [Display(Name = "Country")]
             [DataType(DataType.Text)]
             public int country_ID { get; set; }
-           
+
 
             [Required]
             [Display(Name = "Gender")]
             [DataType(DataType.Text)]
             public string gender { get; set; }
-            
+
             [Range(1, 120, ErrorMessage = "Age must be between 1 and 120.")]
             [Display(Name = "Age")]
             [DataType(DataType.Text)]
             public byte age { get; set; }
-            
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
@@ -144,7 +115,7 @@ namespace amazonbutnot.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 Customer user = CreateUser();
-                
+
                 user.first_name = Input.first_name;
                 user.last_name = Input.last_name;
                 user.birth_date = Input.birth_date;
@@ -178,6 +149,15 @@ namespace amazonbutnot.Areas.Identity.Pages.Account
                     else
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
+
+                        // Assign "Customer" role to the user
+                        var roleExists = await _roleManager.RoleExistsAsync("customer");
+                        if (!roleExists)
+                        {
+                            await _roleManager.CreateAsync(new IdentityRole("customer"));
+                        }
+                        await _userManager.AddToRoleAsync(user, "customer");
+
                         return LocalRedirect(returnUrl);
                     }
                 }
