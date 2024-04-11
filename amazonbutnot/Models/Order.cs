@@ -19,7 +19,7 @@ namespace amazonbutnot.Models
         public string day_of_week { get; set; }
         public byte time { get; set; }
         public string entry_mode { get; set; }
-        public float amount { get; set; }
+        public double amount { get; set; }
         public string type_of_transaction { get; set; }
         public byte country_of_transaction { get; set; }
         public byte shipping_address { get; set; }

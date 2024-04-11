@@ -3,6 +3,10 @@ using amazonbutnot.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.ML.OnnxRuntime;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System.Drawing.Printing;
+using System.Drawing;
 
 namespace amazonbutnot.Controllers;
 
@@ -11,13 +15,17 @@ public class AdminController : Controller
     private readonly IRolesRepository _rolesRepository;
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly UserManager<IdentityUser> _userManager;
+    private IProductRepository _repo;
+    private readonly InferenceSession _session;
 
-    public AdminController(IRolesRepository rolesRepository, RoleManager<IdentityRole> roleManager,UserManager<IdentityUser> userManager)
+    public AdminController(IRolesRepository rolesRepository, RoleManager<IdentityRole> roleManager,UserManager<IdentityUser> userManager, IProductRepository temp, InferenceSession session)
     {
 
         _rolesRepository = rolesRepository;
         _roleManager = roleManager;
         _userManager = userManager;
+        _repo = temp;
+        _session = session;
     }
 
     [HttpGet]
@@ -155,6 +163,30 @@ public class AdminController : Controller
         return NotFound();
 
     }
+    
+    
+// DELETE USER (ADMIN ROLE) BELOW-----------------------
+    [HttpGet]
+    public async Task<IActionResult> DeleteUser(string userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId);  
+        if (user != null)
+        {
+            var result = await _userManager.DeleteAsync(user);  
+            if (result.Succeeded)
+            {
+                TempData["SuccessMessage"] = "Successfully deleted user";
+                return RedirectToAction("UserManagement"); 
+            }
+            else
+            {
+                return Content("could not delete"); 
+            }
+        }
+
+        return NotFound();
+    }
+
     // FIND USER MANAGEMENT BELOW ------------------------------
     public async Task<IActionResult> UserManagement()
     {
@@ -204,15 +236,7 @@ public class AdminController : Controller
                 ModelState.AddModelError("", "User not found.");
                 return View(model);
             }
-
-            // Update the user's name
-            // This assumes you have a method or property to update the name
-            // For example, if storing the name in a claim, you would need to update the claim
-            // This is a placeholder for your implementation
             
-            // UpdateUserName(user, model.Name); // uncomment later jl
-
-            // Update the email if it has changed
             if (user.Email != model.Email)
             {
                 var setEmailResult = await _userManager.SetEmailAsync(user, model.Email);
@@ -237,7 +261,7 @@ public class AdminController : Controller
                 return View(model);
             }
 
-            return RedirectToAction("UserManagement"); // Adjust as necessary
+            return RedirectToAction("UserManagement"); 
         }
         return View(model);
     }
