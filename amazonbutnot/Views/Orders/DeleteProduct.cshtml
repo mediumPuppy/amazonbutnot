@@ -1,0 +1,58 @@
+﻿@model Product
+
+@{
+    ViewData["Title"] = "Delete Product";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="banner text-center">
+                Delete Product
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <form method="post" asp-action="DeleteProductConfirmed" asp-controller="Orders">
+                <input type="hidden" asp-for="product_ID" value="@Model.product_ID" />
+                <input type="hidden" asp-for="name" value="@Model.name" />
+                <input type="hidden" asp-for="year" value="@Model.year" />
+                <input type="hidden" asp-for="num_parts" value="@Model.num_parts" />
+                <input type="hidden" asp-for="price" value="@Model.price" />
+                <input type="hidden" asp-for="img_link" value="@Model.img_link" />
+                <input type="hidden" asp-for="primary_color" value="@Model.primary_color" />
+                <input type="hidden" asp-for="secondary_color" value="@Model.secondary_color" />
+                <input type="hidden" asp-for="description" value="@Model.description" />
+                <input type="hidden" asp-for="Part" value="@Model.Part" />
+                <input type="hidden" asp-for="Structure" value="@Model.Structure" />
+                <input type="hidden" asp-for="Energy" value="@Model.Energy" />
+                <input type="hidden" asp-for="Harry_Potter" value="@Model.Harry_Potter" />
+                <input type="hidden" asp-for="Flight" value="@Model.Flight" />
+                <input type="hidden" asp-for="Minifig" value="@Model.Minifig" />
+                <input type="hidden" asp-for="Character" value="@Model.Character" />
+                <input type="hidden" asp-for="Disney" value="@Model.Disney" />
+                <input type="hidden" asp-for="Colorful" value="@Model.Colorful" />
+                <input type="hidden" asp-for="Animal" value="@Model.Animal" />
+                <input type="hidden" asp-for="Vehicle" value="@Model.Vehicle" />
+                <input type="hidden" asp-for="Miscel" value="@Model.Miscel" />
+                <input type="hidden" asp-for="rec1" value="@Model.rec1" />
+                <input type="hidden" asp-for="rec2" value="@Model.rec2" />
+                <input type="hidden" asp-for="rec3" value="@Model.rec3" />
+                <input type="hidden" asp-for="rec4" value="@Model.rec4" />
+                <input type="hidden" asp-for="rec5" value="@Model.rec5" />
+
+                <div class="mb-3">
+                    <p>Are you sure you want to delete this product?</p>
+                    <h4>@Model.name</h4>
+                </div>
+
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <a asp-action="ProductReview" asp-controller="Orders" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
