@@ -8,6 +8,11 @@
         public IQueryable<Order> Orders { get; }
 
         public IQueryable<LineItem> LineItems { get; }
+
+        Product GetProductById(int productId);
+        void UpdateProduct(Product product);
+        public void AddProduct(Product product);
+        void DeleteProduct(Product product);
     }
 
 }

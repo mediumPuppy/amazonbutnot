@@ -1,0 +1,186 @@
+﻿@model Product
+
+@{
+    ViewData["Title"] = "Add Product";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="banner text-center">
+                Add Product
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <form method="post" asp-action="AddProduct" asp-controller="Orders">
+
+                <div class="mb-3">
+                    <label asp-for="product_ID" class="form-label">Product ID</label>
+                    <input type="number" class="form-control" asp-for="product_ID" required>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" asp-for="name" required>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="year" class="form-label">Year</label>
+                    <input type="number" class="form-control" asp-for="year" required>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="num_parts" class="form-label">Number of Parts</label>
+                    <input type="number" class="form-control" asp-for="num_parts" required>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="price" class="form-label">Price</label>
+                    <input type="number" class="form-control" asp-for="price" required>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="img_link" class="form-label">Image Link</label>
+                    <input type="text" class="form-control" asp-for="img_link" required>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="primary_color" class="form-label">Primary Color</label>
+                    <input type="text" class="form-control" asp-for="primary_color" required>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="secondary_color" class="form-label">Secondary Color</label>
+                    <input type="text" class="form-control" asp-for="secondary_color" required>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="description" class="form-label">Description</label>
+                    <input type="text" class="form-control" asp-for="description" required>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Part" class="form-label">Part</label>
+                    <select class="form-control" asp-for="Part" required>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Structure" class="form-label">Structure</label>
+                    <select class="form-control" asp-for="Structure" required>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Energy" class="form-label">Energy</label>
+                    <select class="form-control" asp-for="Energy" required>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Harry_Potter" class="form-label">Harry Potter</label>
+                    <select class="form-control" asp-for="Harry_Potter" required>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Flight" class="form-label">Flight</label>
+                    <select class="form-control" asp-for="Flight" required>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Minifig" class="form-label">Minifig</label>
+                    <select class="form-control" asp-for="Minifig" required>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Character" class="form-label">Character</label>
+                    <select class="form-control" asp-for="Character" required>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Disney" class="form-label">Disney</label>
+                    <select class="form-control" asp-for="Disney" required>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Colorful" class="form-label">Colorful</label>
+                    <select class="form-control" asp-for="Colorful" required>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Animal" class="form-label">Animal</label>
+                    <select class="form-control" asp-for="Animal" required>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Vehicle" class="form-label">Vehicle</label>
+                    <select class="form-control" asp-for="Vehicle" required>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Miscel" class="form-label">Miscel</label>
+                    <select class="form-control" asp-for="Miscel" required>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <input type="hidden" class="form-control" asp-for="rec1" value="27">
+                </div>
+
+                <div class="mb-3">
+                    <input type="hidden" class="form-control" asp-for="rec2" value="33">
+                </div>
+
+                <div class="mb-3">
+                    <input type="hidden" class="form-control" asp-for="rec3" value="34">
+                </div>
+
+                <div class="mb-3">
+                    <input type="hidden" class="form-control" asp-for="rec4" value="37">
+                </div>
+
+                <div class="mb-3">
+                    <input type="hidden" class="form-control" asp-for="rec5" value="24">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add Product</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
