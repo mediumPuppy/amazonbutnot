@@ -11,9 +11,9 @@ namespace amazonbutnot.Models
         // Foreign key property
         public short customer_ID { get; set; }
 
-        // Navigation property for the related entity
-        [ForeignKey("customer_ID")]
-        public Customer Customer { get; set; }
+        // // Navigation property for the related entity
+        // [ForeignKey("customer_ID")]
+        // public Customer Customer { get; set; }
 
         public DateTime date { get; set; }
         public string day_of_week { get; set; }
