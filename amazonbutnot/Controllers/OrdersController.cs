@@ -43,7 +43,7 @@ namespace amazonbutnot.Controllers
 
         public IActionResult ProductReview(int pageNum = 1)
         {
-            int pageSize = 10;
+            int pageSize = 12;
             var query = _repo.Products;
 
             var productReviewViewModel = new ProductReviewViewModel
@@ -128,31 +128,5 @@ namespace amazonbutnot.Controllers
             }
             return View(product);
         }
-
-
-
-
-
-        //public IActionResult UpdateProduct(int id)
-        //{
-        //    var product = _repo.Products.Where(x => x.product_ID == id);
-        //    if (product == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(product);
-        //}
-
-        //[HttpPost]
-        //public IActionResult UpdateProduct(Product product)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _repo.UpdateProduct(product);
-        //        return RedirectToAction("ProductReview");
-        //    }
-        //    return View(product);
-        //}
-
     }
 }
