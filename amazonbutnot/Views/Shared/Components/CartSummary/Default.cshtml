@@ -7,17 +7,32 @@
 @model Cart
 
 
-<div class="">
-    @if (Model.Lines.Count() > 0)
-    {
-        <small class="navbar-text">
-            <b>Your cart:</b>@Model.Lines.Sum(x => x.Quantity) item(s)
-            @Model.CalculateTotal().ToString("c")
-        </small>
-    }
-    <div class="navbar-nav">
-        <a class="nav-link text-dark" href="/cart">
-            <img src="~/img/Cart.png" alt="Cart" style="width: 24px; height: 24px;">
-        </a>
-    </div>
+
+
+<div class="navbar-nav">
+    <a class="nav-link text-dark" href="/cart">
+        <img src="~/img/Cart.png" alt="Cart" style="width: 24px; height: 24px;">
+        @if (Model.Lines.Count() > 0)
+        {
+            <span class="navbar-text">@Model.Lines.Sum(x => x.Quantity)</span>
+        }
+    </a>
 </div>
+
+
+@* Revert back to orginal Cart updating in navbar *@
+@* <div class=""> *@
+@*     @if (Model.Lines.Count() > 0) *@
+@*     { *@
+@*         <small class="navbar-text"> *@
+@*             $1$ <b>Your cart:</b> #1# *@
+@*             @Model.Lines.Sum(x => x.Quantity) *@
+@*             $1$ @Model.CalculateTotal().ToString("c") #1# *@
+@*         </small> *@
+@*     } *@
+@*     <div class="navbar-nav"> *@
+@*         <a class="nav-link text-dark" href="/cart"> *@
+@*             <img src="~/img/Cart.png" alt="Cart" style="width: 24px; height: 24px;"> *@
+@*         </a> *@
+@*     </div> *@
+@* </div> *@
