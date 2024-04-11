@@ -8,8 +8,12 @@
 
 <div class="container">
     <div class="jumbotron">
-        <h1 class="display-3">Order Received</h1>
-        <p class="lead">Thank you for your order!</p>
+        @if (ViewBag != null)
+        {
+            // Display the ViewBag.Prediction as a popup using JavaScript alert
+            <h1 class="display-3">@ViewBag.Prediction</h1>
+
+        }
         <a class="btn btn-subtle-black" asp-area="" asp-controller="Home" asp-action="Index">Return Home</a>
     </div>
 </div>

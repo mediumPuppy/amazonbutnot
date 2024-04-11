@@ -46,5 +46,7 @@ namespace amazonbutnot.Models
         public IQueryable<Country> Countries => _context.Countries;
 
         public IQueryable<LineItem> LineItems => _context.LineItems;
+
+        public IQueryable<AspNetUser> AspNetUsers => _context.AspNetUsers;
     }
 }
