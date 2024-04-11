@@ -5,6 +5,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using amazonbutnot.Models;
 using Microsoft.Extensions.Logging;
 
 namespace amazonbutnot.Areas.Identity.Pages.Account.Manage

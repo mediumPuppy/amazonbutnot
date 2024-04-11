@@ -14,11 +14,11 @@ public class AdminController : Controller
 {
     private readonly IRolesRepository _rolesRepository;
     private readonly RoleManager<IdentityRole> _roleManager;
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<Customer> _userManager;
     private IProductRepository _repo;
     private readonly InferenceSession _session;
 
-    public AdminController(IRolesRepository rolesRepository, RoleManager<IdentityRole> roleManager,UserManager<IdentityUser> userManager, IProductRepository temp, InferenceSession session)
+    public AdminController(IRolesRepository rolesRepository, RoleManager<IdentityRole> roleManager,UserManager<Customer> userManager, IProductRepository temp, InferenceSession session)
     {
 
         _rolesRepository = rolesRepository;
@@ -206,7 +206,7 @@ public class AdminController : Controller
     {
         if (ModelState.IsValid)
         {
-            var user = new IdentityUser { UserName = model.Email, Email = model.Email };
+            var user = new Customer { UserName = model.Email, Email = model.Email };
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)

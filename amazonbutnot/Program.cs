@@ -27,7 +27,7 @@ var productConnectionString = builder.Configuration.GetConnectionString("Product
 builder.Services.AddDbContext<ProductDbContext>(options =>
     options.UseSqlServer(productConnectionString));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<Customer>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();

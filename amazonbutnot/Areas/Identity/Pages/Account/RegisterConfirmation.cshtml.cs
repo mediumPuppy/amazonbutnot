@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using amazonbutnot.Models;
+using amazonbutnot.Models;
 using Microsoft.AspNetCore.WebUtilities;
 
 namespace amazonbutnot.Areas.Identity.Pages.Account
@@ -17,10 +19,10 @@ namespace amazonbutnot.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterConfirmationModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<Customer> _userManager;
         private readonly IEmailSender _sender;
 
-        public RegisterConfirmationModel(UserManager<IdentityUser> userManager, IEmailSender sender)
+        public RegisterConfirmationModel(UserManager<Customer> userManager, IEmailSender sender)
         {
             _userManager = userManager;
             _sender = sender;
