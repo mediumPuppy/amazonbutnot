@@ -6,8 +6,6 @@ namespace amazonbutnot.Models
 {
     public class Customer : IdentityUser
     {
-        [Key]
-        public short customer_ID { get; set; }
         public string first_name { get; set; }
         public string last_name { get; set;}
         public DateTime birth_date { get; set; }
