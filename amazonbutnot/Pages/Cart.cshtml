@@ -53,15 +53,15 @@
 
 <div class="text-center">
     <!-- Existing Return to Products Button -->
-    <a class="btn btn-subtle-black" href="@Model.ReturnUrl">Return to Products</a>
+    <a class="btn btn-subtle-black" href="@Model.ReturnUrl" style="margin-right: 10px;">Return to Products</a>
     
     <!-- New Checkout Button -->
-
-    <div class="form-box">
+    <div class="form-box" style="display: inline-block;">
         <form asp-action="Predict" asp-controller="Home" asp-route-amount="@Model.Cart?.CalculateTotal()" method="post">
-                <input type="submit" value="Checkout"/>
+            <input type="submit" value="Checkout"/>
         </form>
     </div>
 </div>
+
 
 
