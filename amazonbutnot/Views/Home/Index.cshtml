@@ -6,6 +6,18 @@
 @model ProductsListViewModel
 @* @model Product *@
 
+<style>
+    .display-4 {
+        color: #007bff;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .lead {
+        color: #333;
+        font-size: 1.5rem;
+    }
+</style>
 
 <div class="jumbotron jumbotron-fluid bg-dark text-white mb-0">
     <div class="container">
@@ -24,7 +36,10 @@
 
 
 <div class="row mt-4">
-    <h1>What's Hot</h1>
+    <div class="col-12 text-center mb-5">
+        <h1 class="display-4">🔥 What's Hot 🔥</h1>
+        <p class="lead">Check out the trending products!</p>
+    </div>
     @foreach (Product p in Model.Products)
     {
         <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
