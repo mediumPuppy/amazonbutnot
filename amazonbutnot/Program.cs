@@ -1,12 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using amazonbutnot.Data;
-using Microsoft.AspNetCore.Http;
 using amazonbutnot.Models;
 using Microsoft.ML.OnnxRuntime;
-using Microsoft.ML;
-using Microsoft.ML.OnnxRuntime.Tensors;
-using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,8 +15,8 @@ builder.Services.AddSingleton<InferenceSession>(sp =>
 });
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
-                       throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("ProductDbConnection") ??
+                       throw new InvalidOperationException("Connection string 'ProductDbConnection' not found for identity stuff.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
