@@ -9,7 +9,7 @@ namespace amazonbutnot.Models
         public int transaction_ID { get; set; }
 
         // Foreign key property
-        public short customer_ID { get; set; }
+        public string customer_ID { get; set; }
 
         // // Navigation property for the related entity
         // [ForeignKey("customer_ID")]

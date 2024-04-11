@@ -14,6 +14,7 @@
         void UpdateProduct(Product product);
         public void AddProduct(Product product);
         void DeleteProduct(Product product);
+        public void AddOrder(Order order);
     }
 
 }
