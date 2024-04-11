@@ -31,15 +31,32 @@ public class HomeController : Controller
     public IActionResult Index()
     {
 
-        
-           
+        var username = User.Identity.Name;
 
-            var blah = new ProductsListViewModel
+        // Retrieve the corresponding customer from the repository
+        var customer = _repo.AspNetUsers.FirstOrDefault(x => x.UserName == username);
+
+        if (customer == null || customer.Rec1 == null) 
         {
-            Products = _repo.Products
-                .Where(x => new[] { 27, 33, 34}.Contains(x.product_ID))
-        };
-        return View(blah);
+            var blah = new ProductsListViewModel
+            {
+                Products = _repo.Products
+                .Where(x => new[] { 27, 33, 34 }.Contains(x.product_ID))
+            };
+            return View(blah);
+        }
+        else
+        {
+            var blah = new ProductsListViewModel
+            {
+                Products = _repo.Products
+                .Where(x => new[] { (int)customer.Rec1, (int)customer.Rec2, (int)customer.Rec3}.Contains(x.product_ID))
+            };
+            return View(blah);
+        }
+
+
+        
     }
 
 
