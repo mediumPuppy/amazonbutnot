@@ -1,11 +1,11 @@
 ﻿@page
+
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
 }
 
 <h1>@ViewData["Title"]</h1>
-
 <div class="row">
     <div class="col-md-4">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
@@ -27,6 +27,37 @@
                 <label asp-for="Input.ConfirmPassword">Confirm Password</label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
+            <div class="form-floating mb-3">
+                <label asp-for="Input.first_name" class="form-label"></label>
+                <input asp-for="Input.first_name" class="form-control" />
+                <span asp-validation-for="Input.first_name" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <label asp-for="Input.last_name" class="form-label"></label>
+                <input asp-for="Input.last_name" class="form-control" />
+                <span asp-validation-for="Input.last_name" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <label asp-for="Input.birth_date" class="form-label"></label>
+                <input asp-for="Input.birth_date" class="form-control" />
+                <span asp-validation-for="Input.birth_date" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <label asp-for="Input.country_ID" class="form-label"></label>
+                <input asp-for="Input.country_ID" class="form-control">
+                <span asp-validation-for="Input.country_ID" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <label asp-for="Input.age" class="form-label"></label>
+                <input asp-for="Input.age" class="form-control" />
+                <span asp-validation-for="Input.age" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <label asp-for="Input.gender" class="form-label"></label>
+                <input asp-for="Input.gender" class="form-control" />
+                <span asp-validation-for="Input.gender" class="text-danger"></span>
+            </div>
+
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </form>
     </div>

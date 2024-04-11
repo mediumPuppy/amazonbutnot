@@ -10,12 +10,14 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using amazonbutnot.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using amazonbutnot.Models;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 
@@ -23,17 +25,17 @@ namespace amazonbutnot.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly IUserStore<IdentityUser> _userStore;
-        private readonly IUserEmailStore<IdentityUser> _emailStore;
+        private readonly SignInManager<Customer> _signInManager;
+        private readonly UserManager<Customer> _userManager;
+        private readonly IUserStore<Customer> _userStore;
+        private readonly IUserEmailStore<Customer> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<IdentityUser> userManager,
-            IUserStore<IdentityUser> userStore,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<Customer> userManager,
+            IUserStore<Customer> userStore,
+            SignInManager<Customer> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -70,6 +72,35 @@ namespace amazonbutnot.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "First Name")]
+            public string first_name { get; set; }
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Last Name")]
+            public string last_name { get; set; }
+            [Required]
+            [Display(Name = "Birth Date")]
+            [DataType(DataType.Date)]
+            public DateTime birth_date { get; set; }
+            
+            [Required]
+            [Display(Name = "Country")]
+            [DataType(DataType.Text)]
+            public int country_ID { get; set; }
+           
+
+            [Required]
+            [Display(Name = "Gender")]
+            [DataType(DataType.Text)]
+            public string gender { get; set; }
+            
+            [Range(1, 120, ErrorMessage = "Age must be between 1 and 120.")]
+            [Display(Name = "Age")]
+            [DataType(DataType.Text)]
+            public byte age { get; set; }
+            
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -112,8 +143,14 @@ namespace amazonbutnot.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = CreateUser();
-
+                Customer user = CreateUser();
+                
+                user.first_name = Input.first_name;
+                user.last_name = Input.last_name;
+                user.birth_date = Input.birth_date;
+                user.country_ID = Input.country_ID;
+                user.age = Input.age;
+                user.gender = Input.gender;
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
@@ -154,11 +191,11 @@ namespace amazonbutnot.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private IdentityUser CreateUser()
+        private Customer CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<IdentityUser>();
+                return Activator.CreateInstance<Customer>();
             }
             catch
             {
@@ -168,13 +205,13 @@ namespace amazonbutnot.Areas.Identity.Pages.Account
             }
         }
 
-        private IUserEmailStore<IdentityUser> GetEmailStore()
+        private IUserEmailStore<Customer> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<IdentityUser>)_userStore;
+            return (IUserEmailStore<Customer>)_userStore;
         }
     }
 }

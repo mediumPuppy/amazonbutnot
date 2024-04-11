@@ -4,6 +4,7 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using amazonbutnot.Models;
 
 namespace amazonbutnot.Areas.Identity.Pages.Account
 {
