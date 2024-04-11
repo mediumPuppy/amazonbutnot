@@ -28,12 +28,7 @@
                             <div class="card-body">
                                 <h4 class="card-title fs-5 single-line-ellipsis">@product.name</h4>
                                 <h5 class="text-black text-left">$@product.price</h5>
-                                <form id="@product.product_ID" method="post" asp-page="/Cart">
-                                    <input type="hidden" asp-for="@product.product_ID" />
                                     <a asp-action="ProductDetails" asp-controller="Home" asp-route-id="@product.product_ID" class="btn btn-subtle-gray">View Details</a>
-                                    <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
-                                    <button type="submit" class="btn btn-subtle-black">Add To Cart</button>
-                                </form>
                             </div>
                         </div>
                     </div>

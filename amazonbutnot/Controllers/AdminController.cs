@@ -188,12 +188,31 @@ public class AdminController : Controller
     }
 
     // FIND EDIT USER MANAGEMENT BELOW ------------------------------
-    public async Task<IActionResult> UserManagement()
+    public async Task<IActionResult> UserManagement(int pageNum = 1)
     {
-        var users = _userManager.Users;
-        var model = new UserManagementViewModel { Users = users };
+        int pageSize = 10; // Number of items per page
+
+        var totalItems = await _userManager.Users.CountAsync();
+
+        var pagedUsers = await _userManager.Users
+                                           .Skip((pageNum - 1) * pageSize)
+                                           .Take(pageSize)
+                                           .ToListAsync();
+
+        var model = new UserManagementViewModel
+        {
+            Users = pagedUsers,
+            Pagination = new PaginationInfo
+            {
+                CurrentPage = pageNum,
+                ItemsPerPage = pageSize,
+                TotalItems = totalItems
+            }
+        };
+
         return View(model);
     }
+
     [HttpGet]
     public IActionResult AddUser()
     {
