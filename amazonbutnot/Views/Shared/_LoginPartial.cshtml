@@ -5,7 +5,9 @@
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-        bool isAdmin = await UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "admin");
+        var user = await UserManager.GetUserAsync(User);
+        var roles = await UserManager.GetRolesAsync(user);
+        bool isAdmin = roles.Any(r => string.Equals(r, "ADMIN", StringComparison.OrdinalIgnoreCase));
         if (isAdmin)
         {
             //The next few links are going to be links to admin pages, we'll want to change this to only be accessible by admins

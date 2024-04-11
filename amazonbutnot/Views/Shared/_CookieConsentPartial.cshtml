@@ -9,10 +9,11 @@
 @if (showBanner)
 {
     <div id="cookieConsent" class="alert alert-info alert-dismissible fade show" role="alert">
-        Use this space to summarize your privacy and cookie use policy. <a asp-page="/Privacy">Learn More</a>.
-        <button type="button" class="accept-policy close" data-bs-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">
-            <span aria-hidden="true">Accept</span>
+        By using LegoBricker, you agree to our <a href="/Home/Privacy" target="_blank">Cookie Policy</a>.
+        <button type="button" class="btn btn-success accept-policy close float-start" data-bs-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">
+            <span class="text-black" aria-hidden="true">Accept</span>
         </button>
+        
     </div>
     <script>
         (function () {
@@ -23,3 +24,30 @@
         })();
     </script>
 }
+
+<style>
+    #cookieConsent {
+        width: 450px;
+        height: auto;
+        background-color: #fff;
+        position: fixed;
+        bottom: 88px;
+        border-radius: 10px;
+        left: 5%;
+        padding: 10px 20px;
+        color: #1D2D35; /* Text color */
+    }
+    
+    #cookieConsent .btn {
+        background-color: #F0F0F2;
+        color: #fff;
+        border-radius: 32px;
+        padding: 8px 24px;
+        font-size: 16px;
+        margin-top: 12px; /* Adjust margin to better align the button */
+    }
+    
+    #cookieConsent .btn:hover {
+        background-color: #30b867;
+    }
+</style>

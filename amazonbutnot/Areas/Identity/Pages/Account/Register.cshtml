@@ -15,6 +15,12 @@
                     <!-- Column 1 -->
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
+                            <input asp-for="Input.first_name" class="form-control"/>
+                            <label asp-for="Input.first_name">First Name</label>
+                            <span asp-validation-for="Input.first_name" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="form-floating mb-3">
                             <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com"/>
                             <label asp-for="Input.Email">Email</label>
                             <span asp-validation-for="Input.Email" class="text-danger"></span>
@@ -29,19 +35,15 @@
                             <label asp-for="Input.ConfirmPassword">Confirm Password</label>
                             <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                         </div>
-                        <div class="form-floating mb-3">
-                            <input asp-for="Input.first_name" class="form-control"/>
-                            <label asp-for="Input.first_name">First Name</label>
-                            <span asp-validation-for="Input.first_name" class="text-danger"></span>
-                        </div>
+<button id="registerSubmit" type="submit" class="w-100 btn btn-lg text-white" style="height: 58px; background-color: #3E3A3A;">Register</button>
+                    </div>
+                    <!-- Column 2 -->
+                    <div class="col-md-6">
                         <div class="form-floating mb-3">
                             <input asp-for="Input.last_name" class="form-control"/>
                             <label asp-for="Input.last_name">Last Name</label>
                             <span asp-validation-for="Input.last_name" class="text-danger"></span>
                         </div>
-                    </div>
-                    <!-- Column 2 -->
-                    <div class="col-md-6">
                         <div class="form-floating mb-3">
                             <input asp-for="Input.birth_date" type="date" class="form-control"/>
                             <label asp-for="Input.birth_date">Birth Date</label>
@@ -75,7 +77,6 @@
                         </div>
                     </div>
                 </div>
-                <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
             </form>
         </div>
     </div>
