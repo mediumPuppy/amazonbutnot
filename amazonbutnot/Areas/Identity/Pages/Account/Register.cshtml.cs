@@ -191,7 +191,7 @@ namespace amazonbutnot.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private IdentityUser CreateUser()
+        private Customer CreateUser()
         {
             try
             {
