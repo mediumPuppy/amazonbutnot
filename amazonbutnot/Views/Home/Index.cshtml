@@ -20,11 +20,17 @@
         </div>
     </div>
 </div>
-<div class="row">
+
+
+
+<div class="row mt-4">
+    <h1>What's Hot</h1>
     @foreach (Product p in Model.Products)
     {
         <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-            <partial name="ProductSummary" model="p" />
+            <div class="p-5">
+                <partial name="ProductSummary" model="p" />
+            </div>
         </div>
     }
 </div>
