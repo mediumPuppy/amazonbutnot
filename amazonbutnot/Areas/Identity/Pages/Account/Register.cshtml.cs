@@ -144,6 +144,7 @@ namespace amazonbutnot.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 Customer user = CreateUser();
+                
                 user.first_name = Input.first_name;
                 user.last_name = Input.last_name;
                 user.birth_date = Input.birth_date;

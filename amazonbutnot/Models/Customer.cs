@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
 namespace amazonbutnot.Models
@@ -13,6 +14,9 @@ namespace amazonbutnot.Models
 
         // Foreign key property
         public int country_ID { get; set; }
+        
+        [ForeignKey("country_ID")]
+        public Country Country { get; set; }
         
         public string gender { get; set; }
         public byte age { get; set; }
