@@ -18,6 +18,12 @@ namespace amazonbutnot.Models
             _context.SaveChanges();
         }
 
+        public void AddOrder(Order order)
+        {
+            _context.Orders.Add(order);
+            _context.SaveChanges();
+        }
+
         public void DeleteProduct(Product product)
         {
             var existingProduct = _context.Products.FirstOrDefault(p => p.product_ID == product.product_ID);
