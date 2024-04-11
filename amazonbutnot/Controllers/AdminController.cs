@@ -187,7 +187,7 @@ public class AdminController : Controller
         return NotFound();
     }
 
-    // FIND USER MANAGEMENT BELOW ------------------------------
+    // FIND EDIT USER MANAGEMENT BELOW ------------------------------
     public async Task<IActionResult> UserManagement()
     {
         var users = _userManager.Users;
@@ -195,7 +195,11 @@ public class AdminController : Controller
         return View(model);
     }
     [HttpGet]
-    public IActionResult AddUser() => View();
+    public IActionResult AddUser()
+    {
+        var model = new UserManagementViewModel();
+        return View(model);
+    }
 
     [HttpPost]
     public async Task<IActionResult> AddUser(UserManagementViewModel model)
@@ -207,15 +211,25 @@ public class AdminController : Controller
 
             if (result.Succeeded)
             {
+                TempData["SuccessMessage"] = "Successfully added user";
                 return RedirectToAction("UserManagement");
             }
-            foreach (var error in result.Errors)
+            else
             {
-                ModelState.AddModelError("", error.Description);
+                
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+                
+                return View(model);
             }
         }
+
+        // If the model state is not valid, return to the view with the model to show validation errors
         return View(model);
     }
+//EDIT USER 
     [HttpGet]
     public async Task<IActionResult> EditUser(string userId)
     {
@@ -236,7 +250,9 @@ public class AdminController : Controller
                 ModelState.AddModelError("", "User not found.");
                 return View(model);
             }
-            
+
+            var updateNeeded = false;
+
             if (user.Email != model.Email)
             {
                 var setEmailResult = await _userManager.SetEmailAsync(user, model.Email);
@@ -248,21 +264,39 @@ public class AdminController : Controller
                     }
                     return View(model);
                 }
+                updateNeeded = true;
             }
 
-            // Save changes to the user
-            var result = await _userManager.UpdateAsync(user);
-            if (!result.Succeeded)
+            if (!string.IsNullOrEmpty(model.Password) && model.Password == model.Password)
             {
-                foreach (var error in result.Errors)
+                var setPasswordResult = await _userManager.ChangePasswordAsync(user, model.Password, model.Password);
+                if (!setPasswordResult.Succeeded)
                 {
-                    ModelState.AddModelError("", error.Description);
+                    foreach (var error in setPasswordResult.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                    return View(model);
                 }
-                return View(model);
+                updateNeeded = true;
+            }
+
+            if (updateNeeded)
+            {
+                var result = await _userManager.UpdateAsync(user);
+                if (!result.Succeeded)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                    return View(model);
+                }
             }
 
             return RedirectToAction("UserManagement"); 
         }
         return View(model);
     }
+
 }

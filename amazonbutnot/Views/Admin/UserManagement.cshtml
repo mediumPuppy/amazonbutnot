@@ -19,11 +19,11 @@
         <tr>
             <td>@user.Email</td>
             <td>
-                <a href="@Url.Action("EditUser", "Admin", new { userId = user.Id })" class="btn btn-primary">Edit</a>
+                @* <a href="@Url.Action("EditUser", "Admin", new { userId = user.Id })" class="btn btn-primary">Edit</a> *@
                 <a href="@Url.Action("DeleteUser", "Admin", new { userId = user.Id })" class="btn btn-danger">Delete</a>
             </td>
         </tr>
     }
 </table>
-<a href="@Url.Action("AddUser", "Admin")" class="btn btn-success">Add New User</a>
+<a class="btn btn-success" asp-area="Identity" asp-page="/Account/Register">Add New User</a>
 @* comment to push *@
