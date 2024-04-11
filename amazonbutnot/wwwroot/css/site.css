@@ -91,3 +91,13 @@ body {
     padding-top: 15px;
     background-color: #fff;
 }
+
+.btn-primary {
+    color: #fff;
+    background-color: #3E3A3A;
+    border-color: #3E3A3A;
+}
+.btn-primary:hover {
+    background-color: black;
+    border-color: black;
+}
