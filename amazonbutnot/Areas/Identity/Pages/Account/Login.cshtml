@@ -2,15 +2,15 @@
 @model LoginModel
 
 @{
-    ViewData["Title"] = "Log in";
+    ViewData["Title"] = "Welcome!";
 }
 
-<h1>@ViewData["Title"]</h1>
-<div class="row">
+<h1 class="margins">@ViewData["Title"]</h1>
+<div class="row margins">
     <div class="col-md-4">
         <section>
             <form id="account" method="post">
-                <h2>Use a local account to log in.</h2>
+                <h2>Login</h2>
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                 <div class="form-floating mb-3">
@@ -34,14 +34,15 @@
                 </div>
                 <div>
                     <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                        <a style="font-weight: 600 " id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
                     </p>
                     <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                        <a style="font-weight: 600" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
                     </p>
-                    <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-                    </p>
+                    @* commented out for potential future use *@
+                    @* <p> *@
+                    @*     <a style="font-weight: 600" id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a> *@
+                    @* </p> *@
                 </div>
             </form>
         </section>
