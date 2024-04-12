@@ -1,6 +1,7 @@
 ﻿@using amazonbutnot.Models.ViewModels
 @{
     ViewData["Title"] = "Home Page";
+    object media = null;
 }
 
 @model ProductsListViewModel
@@ -8,7 +9,7 @@
 
 <style>
     .display-4 {
-        color: #007bff;
+        color: #333;
         font-weight: bold;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     }
@@ -16,6 +17,31 @@
     .lead {
         color: #333;
         font-size: 1.5rem;
+    }
+    
+    .text-center-custom {
+        text-align: center;  
+    }
+    
+
+    @media (max-width: 576px) { 
+        .h1-responsive {
+            font-size: 1.5rem; 
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .btn-lg {
+            padding: 1rem 2rem;  
+            font-size: 1.25rem;  
+            width: 100%;  
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .h5-responsive {
+            padding-top: 20px; 
+        }
     }
 
 
@@ -26,8 +52,14 @@
         <div class="row no-gutters align-items-center"> <!-- Use no-gutters to remove spacing between columns -->
             <div class="col-md-5">
                 <div class="p-md-5"> <!-- Add padding on md screens and above -->
-                    <h1>Explore Lego Sets</h1>
-                    <a class="btn btn-secondary btn-lg" asp-area="" asp-controller="Home" asp-action="Products">Shop Now</a>
+                    <h1 class="h1-responsive">Search Aurora's Master Builds</h1>
+                    <h5 class="h5-responsive" style="font-weight: normal; margin-top: 20px; margin-bottom: 20px;">Explore distributed builds from The Lego Group™</h5>
+                    <a class="btn btn-secondary btn-lg" style="margin-bottom: 20px;" asp-area="" asp-controller="Home" asp-action="Products">
+                        Shop Now
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L10.293 8 4.646 2.354a.5.5 0 010-.708z"/>
+                        </svg>
+                    </a>
                 </div>
             </div>
             <div class="col-md-7"> <!-- Update column size to 7 to make 60% on md screens -->
@@ -41,7 +73,7 @@
 
 <div class="row mt-4">
     <div class="col-12 text-center mb-5">
-        <h1 class="display-4">🔥 What's Hot 🔥</h1>
+        <h1 class="display-4">What's Hot 🔥</h1>
         <p class="lead">Check out the trending products!</p>
     </div>
     @foreach (Product p in Model.Products)

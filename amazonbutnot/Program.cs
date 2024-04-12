@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using amazonbutnot.Data;
 using amazonbutnot.Models;
 using Microsoft.ML.OnnxRuntime;
+using amazonbutnot.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -94,7 +95,22 @@ app.UseCookiePolicy();
 
 app.UseRouting();
 
+//Our extra security feature
+app.UseMiddleware<RateLimitMiddleware>();
+
 app.UseAuthorization();
+
+//CSP header stuff
+app.Use(async (ctx, next) =>
+{
+    ctx.Response.Headers.Add("Content-Security-Policy",
+        "default-src 'self'; " +
+        "style-src 'self' 'unsafe-inline' https://stackpath.bootstrapcdn.com; " + // Allow inline styles and stylesheets from Bootstrap CDN
+        "script-src 'self' https://code.jquery.com https://stackpath.bootstrapcdn.com; " + // Allow scripts from jQuery CDN and Bootstrap CDN
+        "font-src 'self' https://stackpath.bootstrapcdn.com; " + // Allow fonts from Bootstrap CDN
+        "img-src 'self' data: https:;"); // Allow images from data URLs and HTTPS sources
+    await next();
+});
 
 // Add session middleware
 app.UseSession();
