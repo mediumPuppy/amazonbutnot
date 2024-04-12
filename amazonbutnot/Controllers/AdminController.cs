@@ -334,4 +334,79 @@ public class AdminController : Controller
 
         return View(viewModel);
     }
+    public async Task<IActionResult> MakeAdmin(string userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+        if (user == null)
+        {
+            ViewBag.ErrorMessage = "User not found.";
+        }
+        else if (await _userManager.IsInRoleAsync(user, "admin"))
+        {
+            ViewBag.ErrorMessage = "User is already an admin.";
+        }
+        else
+        {
+            var result = await _userManager.AddToRoleAsync(user, "admin");
+            if (result.Succeeded)
+            {
+                ViewBag.SuccessMessage = "Successfully added user as admin.";
+            }
+            else
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+        }
+        return RedirectToAction("Results", new { message = ViewBag.ErrorMessage ?? ViewBag.SuccessMessage, alertType = ViewBag.ErrorMessage != null ? "danger" : "success" });
+    }
+
+    public async Task<IActionResult> MakeCust(string userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+        if (user == null)
+        {
+            ViewBag.ErrorMessage = "User not found.";
+        }
+        else if (await _userManager.IsInRoleAsync(user, "customer"))
+        {
+            ViewBag.ErrorMessage = "User is already a customer.";
+        }
+        else
+        {
+            var result = await _userManager.AddToRoleAsync(user, "customer");
+            if (result.Succeeded)
+            {
+                ViewBag.SuccessMessage = "Successfully added user as customer.";
+            }
+            else
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+        }
+        return RedirectToAction("Results", new { message = ViewBag.ErrorMessage ?? ViewBag.SuccessMessage, alertType = ViewBag.ErrorMessage != null ? "danger" : "success" });
+    }
+
+    [HttpGet]
+    public IActionResult Results(string message, string alertType)
+    {
+        // Clear ViewBag variables to prevent them from being retained across redirects
+        ViewBag.ErrorMessage = null;
+        ViewBag.SuccessMessage = null;
+
+        ViewBag.Message = message;
+        ViewBag.AlertType = alertType;
+        return View();
+    }
+
+
+
+
+
+
 }

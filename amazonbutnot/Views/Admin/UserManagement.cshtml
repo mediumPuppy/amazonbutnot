@@ -1,11 +1,6 @@
 @model UserManagementViewModel
 
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["SuccessMessage"]
-    </div>
-}
+
 
 <h2>Users</h2>
 <table class="table">
@@ -18,8 +13,9 @@
         <tr>
             <td>@user.Email</td>
             <td>
+                <a href="@Url.Action("MakeAdmin", "Admin", new { userId = user.Id })" class="btn btn-primary">Make Admin</a>
+                <a href="@Url.Action("MakeCust", "Admin", new { userId = user.Id })" class="btn btn-primary">Make Customer</a>
                 <a href="@Url.Action("DeleteConfirm", "Admin", new { userId = user.Id })" class="btn btn-danger">Delete</a>
-                
             </td>
         </tr>
     }
@@ -32,8 +28,6 @@
     <div page-model="Model.Pagination" page-action="UserManagement" page-url-pageNum="@Model.Pagination.CurrentPage"
          page-classes-enabled="true" page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-dark" class="btn-group m-1"></div>
 </div>
-
-
 
 <style>
     .pagination {
