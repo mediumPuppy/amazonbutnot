@@ -68,21 +68,27 @@ public class AdminController : Controller
     }
 
     // FIND EDIT USER MANAGEMENT BELOW ------------------------------
-    public async Task<IActionResult> UserManagement(int pageNum = 1)
+    public async Task<IActionResult> UserManagement(string? searchString, int pageNum = 1)
     {
         if (!User.IsInRole("admin"))
         {
-            // Redirect to a specific route or page for unauthorized access
             return RedirectToPage("/Account/Login", new { area = "Identity" });
         }
-        int pageSize = 10; // Number of items per page
+        int pageSize = 10;
 
-        var totalItems = await _userManager.Users.CountAsync();
+        IQueryable<Customer> usersQuery = _userManager.Users;
 
-        var pagedUsers = await _userManager.Users
-                                           .Skip((pageNum - 1) * pageSize)
-                                           .Take(pageSize)
-                                           .ToListAsync();
+        if (!string.IsNullOrEmpty(searchString))
+        {
+            usersQuery = usersQuery.Where(u => u.Email.Contains(searchString));
+        }
+
+        var totalItems = await usersQuery.CountAsync();
+
+        var pagedUsers = await usersQuery
+                                   .Skip((pageNum - 1) * pageSize)
+                                   .Take(pageSize)
+                                   .ToListAsync();
 
         var model = new UserManagementViewModel
         {
@@ -97,6 +103,7 @@ public class AdminController : Controller
 
         return View(model);
     }
+
 
     [HttpGet]
     public IActionResult AddUser()
@@ -258,34 +265,34 @@ public class AdminController : Controller
         return RedirectToAction("Results", new { message = ViewBag.ErrorMessage ?? ViewBag.SuccessMessage, alertType = ViewBag.ErrorMessage != null ? "danger" : "success" });
     }
 
-    public async Task<IActionResult> MakeCust(string userId)
-    {
-        var user = await _userManager.FindByIdAsync(userId);
-        if (user == null)
-        {
-            ViewBag.ErrorMessage = "User not found.";
-        }
-        else if (await _userManager.IsInRoleAsync(user, "customer"))
-        {
-            ViewBag.ErrorMessage = "User is already a customer.";
-        }
-        else
-        {
-            var result = await _userManager.AddToRoleAsync(user, "customer");
-            if (result.Succeeded)
-            {
-                ViewBag.SuccessMessage = "Successfully added user as customer.";
-            }
-            else
-            {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
-            }
-        }
-        return RedirectToAction("Results", new { message = ViewBag.ErrorMessage ?? ViewBag.SuccessMessage, alertType = ViewBag.ErrorMessage != null ? "danger" : "success" });
-    }
+    //public async Task<IActionResult> MakeCust(string userId)
+    //{
+    //    var user = await _userManager.FindByIdAsync(userId);
+    //    if (user == null)
+    //    {
+    //        ViewBag.ErrorMessage = "User not found.";
+    //    }
+    //    else if (await _userManager.IsInRoleAsync(user, "customer"))
+    //    {
+    //        ViewBag.ErrorMessage = "User is already a customer.";
+    //    }
+    //    else
+    //    {
+    //        var result = await _userManager.AddToRoleAsync(user, "customer");
+    //        if (result.Succeeded)
+    //        {
+    //            ViewBag.SuccessMessage = "Successfully added user as customer.";
+    //        }
+    //        else
+    //        {
+    //            foreach (var error in result.Errors)
+    //            {
+    //                ModelState.AddModelError("", error.Description);
+    //            }
+    //        }
+    //    }
+    //    return RedirectToAction("Results", new { message = ViewBag.ErrorMessage ?? ViewBag.SuccessMessage, alertType = ViewBag.ErrorMessage != null ? "danger" : "success" });
+    //}
 
     [HttpGet]
     public IActionResult Results(string message, string alertType)
