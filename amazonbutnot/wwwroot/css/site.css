@@ -11,6 +11,10 @@ html {
   }
 }
 
+.display-4 {
+    color: #2b38ab; 
+}
+
 .single-line-ellipsis {
     white-space: nowrap; /* Keep the text on a single line */
     overflow: hidden; /* Hide text that goes beyond the width of the container */
