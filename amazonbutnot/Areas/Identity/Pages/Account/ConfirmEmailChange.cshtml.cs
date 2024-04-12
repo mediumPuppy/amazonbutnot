@@ -16,10 +16,10 @@ namespace amazonbutnot.Areas.Identity.Pages.Account
 {
     public class ConfirmEmailChangeModel : PageModel
     {
-        private readonly UserManager<Customer> _userManager;
-        private readonly SignInManager<Customer> _signInManager;
+        private readonly UserManager<AspNetUser> _userManager;
+        private readonly SignInManager<AspNetUser> _signInManager;
 
-        public ConfirmEmailChangeModel(UserManager<Customer> userManager, SignInManager<Customer> signInManager)
+        public ConfirmEmailChangeModel(UserManager<AspNetUser> userManager, SignInManager<AspNetUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

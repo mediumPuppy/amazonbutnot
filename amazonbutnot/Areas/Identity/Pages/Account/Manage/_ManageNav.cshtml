@@ -1,6 +1,6 @@
 @using amazonbutnot.Models
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@inject SignInManager<Customer> SignInManager
+@inject SignInManager<AspNetUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }

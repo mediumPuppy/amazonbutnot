@@ -18,8 +18,8 @@
         <tr>
             <td>@user.Email</td>
             <td>
+                <a href="@Url.Action("EditUser", "Admin", new { userId = user.Id })" class="btn btn-primary">Edit</a>
                 <a href="@Url.Action("DeleteConfirm", "Admin", new { userId = user.Id })" class="btn btn-danger">Delete</a>
-                
             </td>
         </tr>
     }

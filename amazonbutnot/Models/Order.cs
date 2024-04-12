@@ -12,7 +12,7 @@ namespace amazonbutnot.Models
         public string customer_ID { get; set; }
 
         // // Navigation property for the related entity
-        // [ForeignKey("customer_ID")]
+        // [ForeignKey("Id")]
         // public Customer Customer { get; set; }
 
         public DateTime date { get; set; }

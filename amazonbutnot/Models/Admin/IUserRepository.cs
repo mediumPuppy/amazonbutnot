@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Identity;
 namespace amazonbutnot.Models;
 public interface IUserRepository
 {
-    Task<IEnumerable<Customer>> GetAllUsersAsync();
-    Task<Customer> FindByIdAsync(string userId);
-    Task<Customer> FindByNameAsync(string userName);
-    Task<bool> CreateAsync(Customer user);
-    Task<bool> UpdateAsync(Customer user);
-    Task<bool> DeleteAsync(Customer user);
+    Task<IEnumerable<AspNetUser>> GetAllUsersAsync();
+    Task<AspNetUser> FindByIdAsync(string userId);
+    Task<AspNetUser> FindByNameAsync(string userName);
+    Task<bool> CreateAsync(AspNetUser user);
+    Task<bool> UpdateAsync(AspNetUser user);
+    Task<bool> DeleteAsync(AspNetUser user);
 }

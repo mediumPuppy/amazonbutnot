@@ -18,11 +18,11 @@ namespace amazonbutnot.Areas.Identity.Pages.Account.Manage
 {
     public class DownloadPersonalDataModel : PageModel
     {
-        private readonly UserManager<Customer> _userManager;
+        private readonly UserManager<AspNetUser> _userManager;
         private readonly ILogger<DownloadPersonalDataModel> _logger;
 
         public DownloadPersonalDataModel(
-            UserManager<Customer> userManager,
+            UserManager<AspNetUser> userManager,
             ILogger<DownloadPersonalDataModel> logger)
         {
             _userManager = userManager;

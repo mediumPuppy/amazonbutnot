@@ -17,13 +17,13 @@ namespace amazonbutnot.Areas.Identity.Pages.Account
 {
     public class LoginWith2faModel : PageModel
     {
-        private readonly SignInManager<Customer> _signInManager;
-        private readonly UserManager<Customer> _userManager;
+        private readonly SignInManager<AspNetUser> _signInManager;
+        private readonly UserManager<AspNetUser> _userManager;
         private readonly ILogger<LoginWith2faModel> _logger;
 
         public LoginWith2faModel(
-            SignInManager<Customer> signInManager,
-            UserManager<Customer> userManager,
+            SignInManager<AspNetUser> signInManager,
+            UserManager<AspNetUser> userManager,
             ILogger<LoginWith2faModel> logger)
         {
             _signInManager = signInManager;

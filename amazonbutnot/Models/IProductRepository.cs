@@ -4,7 +4,6 @@
     {
         public IQueryable<AspNetUser> AspNetUsers { get; }
         public IQueryable<Product> Products { get; }
-        public IQueryable<Customer> Customers { get; }
         public IQueryable<Country> Countries { get; }
         public IQueryable<Order> Orders { get; }
 

@@ -1,31 +1,23 @@
+using System.Security.Claims;
 using amazonbutnot.Models;
 using amazonbutnot.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.ML.OnnxRuntime;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using System.Drawing.Printing;
-using System.Drawing;
-
 namespace amazonbutnot.Controllers;
 
 public class AdminController : Controller
 {
-    private readonly IRolesRepository _rolesRepository;
+
     private readonly RoleManager<IdentityRole> _roleManager;
-    private readonly UserManager<Customer> _userManager;
-    private IProductRepository _repo;
-    private readonly InferenceSession _session;
+    private readonly UserManager<AspNetUser> _userManager;
 
-    public AdminController(IRolesRepository rolesRepository, RoleManager<IdentityRole> roleManager,UserManager<Customer> userManager, IProductRepository temp, InferenceSession session)
+
+
+    public AdminController( RoleManager<IdentityRole> roleManager,UserManager<AspNetUser> userManager)
     {
-
-        _rolesRepository = rolesRepository;
         _roleManager = roleManager;
         _userManager = userManager;
-        _repo = temp;
-        _session = session;
     }
 
     [HttpGet]
@@ -225,7 +217,7 @@ public class AdminController : Controller
     {
         if (ModelState.IsValid)
         {
-            var user = new Customer { UserName = model.Email, Email = model.Email };
+            var user = new AspNetUser { UserName = model.Email, Email = model.Email };
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)
@@ -254,7 +246,10 @@ public class AdminController : Controller
     {
         var user = await _userManager.FindByIdAsync(userId);
         if (user == null) return NotFound();
-
+        var roles = await _userManager.GetRolesAsync(user);
+        
+        // bool isAdmin = roles.Any(r => string.Equals(r, "ADMIN", StringComparison.OrdinalIgnoreCase));
+    
         var model = new UserManagementViewModel { UserId = user.Id, Email = user.Email };
         return View(model);
     }

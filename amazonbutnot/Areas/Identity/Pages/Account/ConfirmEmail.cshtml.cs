@@ -17,9 +17,9 @@ namespace amazonbutnot.Areas.Identity.Pages.Account
 {
     public class ConfirmEmailModel : PageModel
     {
-        private readonly UserManager<Customer> _userManager;
+        private readonly UserManager<AspNetUser> _userManager;
 
-        public ConfirmEmailModel(UserManager<Customer> userManager)
+        public ConfirmEmailModel(UserManager<AspNetUser> userManager)
         {
             _userManager = userManager;
         }

@@ -14,18 +14,18 @@ namespace amazonbutnot.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<Customer> _signInManager;
-        private readonly UserManager<Customer> _userManager;
-        private readonly IUserStore<Customer> _userStore;
-        private readonly IUserEmailStore<Customer> _emailStore;
+        private readonly SignInManager<AspNetUser> _signInManager;
+        private readonly UserManager<AspNetUser> _userManager;
+        private readonly IUserStore<AspNetUser> _userStore;
+        private readonly IUserEmailStore<AspNetUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
-            UserManager<Customer> userManager,
-            IUserStore<Customer> userStore,
-            SignInManager<Customer> signInManager,
+            UserManager<AspNetUser> userManager,
+            IUserStore<AspNetUser> userStore,
+            SignInManager<AspNetUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
             RoleManager<IdentityRole> roleManager)
@@ -107,7 +107,7 @@ namespace amazonbutnot.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                Customer user = CreateUser();
+                AspNetUser user = CreateUser();
 
                 user.first_name = Input.first_name;
                 user.last_name = Input.last_name;
@@ -165,11 +165,11 @@ namespace amazonbutnot.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private Customer CreateUser()
+        private AspNetUser CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<Customer>();
+                return Activator.CreateInstance<AspNetUser>();
             }
             catch
             {
@@ -179,13 +179,13 @@ namespace amazonbutnot.Areas.Identity.Pages.Account
             }
         }
 
-        private IUserEmailStore<Customer> GetEmailStore()
+        private IUserEmailStore<AspNetUser> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<Customer>)_userStore;
+            return (IUserEmailStore<AspNetUser>)_userStore;
         }
     }
 }

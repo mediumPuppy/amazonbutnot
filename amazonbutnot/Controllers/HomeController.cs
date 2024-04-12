@@ -1,16 +1,9 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using amazonbutnot.Models;
-using Microsoft.AspNetCore.Authorization;
 using amazonbutnot.Models.ViewModels;
-using Microsoft.ML;
 using Microsoft.ML.OnnxRuntime;
 using Microsoft.ML.OnnxRuntime.Tensors;
-using System.IO;
-using Microsoft.EntityFrameworkCore;
-using System.Drawing.Printing;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Http;
 
 
 namespace amazonbutnot.Controllers;
@@ -34,7 +27,7 @@ public class HomeController : Controller
         var username = User.Identity.Name;
 
         // Retrieve the corresponding customer from the repository
-        var customer = _repo.AspNetUsers.FirstOrDefault(x => x.UserName == username);
+        AspNetUser customer = _repo.AspNetUsers.FirstOrDefault(x => x.UserName == username);
 
         if (customer == null || customer.Rec1 == null) 
         {

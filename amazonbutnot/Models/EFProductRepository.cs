@@ -45,8 +45,6 @@ namespace amazonbutnot.Models
             _context.SaveChanges();
         }
 
-        public IQueryable<Customer> Customers => _context.Customers;
-
         public IQueryable<Order> Orders => _context.Orders;
 
         public IQueryable<Country> Countries => _context.Countries;

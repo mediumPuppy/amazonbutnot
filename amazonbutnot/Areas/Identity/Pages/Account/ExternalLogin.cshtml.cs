@@ -20,17 +20,17 @@ namespace amazonbutnot.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ExternalLoginModel : PageModel
     {
-        private readonly SignInManager<Customer> _signInManager;
-        private readonly UserManager<Customer> _userManager;
-        private readonly IUserStore<Customer> _userStore;
-        private readonly IUserEmailStore<Customer> _emailStore;
+        private readonly SignInManager<AspNetUser> _signInManager;
+        private readonly UserManager<AspNetUser> _userManager;
+        private readonly IUserStore<AspNetUser> _userStore;
+        private readonly IUserEmailStore<AspNetUser> _emailStore;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
 
         public ExternalLoginModel(
-            SignInManager<Customer> signInManager,
-            UserManager<Customer> userManager,
-            IUserStore<Customer> userStore,
+            SignInManager<AspNetUser> signInManager,
+            UserManager<AspNetUser> userManager,
+            IUserStore<AspNetUser> userStore,
             ILogger<ExternalLoginModel> logger,
             IEmailSender emailSender)
         {
@@ -148,7 +148,7 @@ namespace amazonbutnot.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                Customer user = CreateUser();
+                AspNetUser user = CreateUser();
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -194,11 +194,11 @@ namespace amazonbutnot.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private Customer CreateUser()
+        private AspNetUser CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<Customer>();
+                return Activator.CreateInstance<AspNetUser>();
             }
             catch
             {
@@ -208,13 +208,13 @@ namespace amazonbutnot.Areas.Identity.Pages.Account
             }
         }
 
-        private IUserEmailStore<Customer> GetEmailStore()
+        private IUserEmailStore<AspNetUser> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<Customer>)_userStore;
+            return (IUserEmailStore<AspNetUser>)_userStore;
         }
     }
 }

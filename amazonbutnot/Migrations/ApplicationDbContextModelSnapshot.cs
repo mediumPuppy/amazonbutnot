@@ -3,20 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using amazonbutnot.Data;
 
 #nullable disable
 
-namespace amazonbutnot.Migrations.ApplicationDb
+namespace amazonbutnot.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240411153200_scaryattempt2")]
-    partial class scaryattempt2
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -162,7 +159,7 @@ namespace amazonbutnot.Migrations.ApplicationDb
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("amazonbutnot.Models.Customer", b =>
+            modelBuilder.Entity("amazonbutnot.Models.AspNetUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -238,9 +235,6 @@ namespace amazonbutnot.Migrations.ApplicationDb
                     b.Property<int>("country_ID")
                         .HasColumnType("int");
 
-                    b.Property<short>("customer_ID")
-                        .HasColumnType("smallint");
-
                     b.Property<string>("first_name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -277,7 +271,7 @@ namespace amazonbutnot.Migrations.ApplicationDb
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("amazonbutnot.Models.Customer", null)
+                    b.HasOne("amazonbutnot.Models.AspNetUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -286,7 +280,7 @@ namespace amazonbutnot.Migrations.ApplicationDb
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("amazonbutnot.Models.Customer", null)
+                    b.HasOne("amazonbutnot.Models.AspNetUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -301,7 +295,7 @@ namespace amazonbutnot.Migrations.ApplicationDb
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("amazonbutnot.Models.Customer", null)
+                    b.HasOne("amazonbutnot.Models.AspNetUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -310,7 +304,7 @@ namespace amazonbutnot.Migrations.ApplicationDb
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("amazonbutnot.Models.Customer", null)
+                    b.HasOne("amazonbutnot.Models.AspNetUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -17,9 +17,9 @@ namespace amazonbutnot.Areas.Identity.Pages.Account
 {
     public class ResetPasswordModel : PageModel
     {
-        private readonly UserManager<Customer> _userManager;
+        private readonly UserManager<AspNetUser> _userManager;
 
-        public ResetPasswordModel(UserManager<Customer> userManager)
+        public ResetPasswordModel(UserManager<AspNetUser> userManager)
         {
             _userManager = userManager;
         }

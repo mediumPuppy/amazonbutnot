@@ -20,8 +20,6 @@ namespace amazonbutnot.Data
 
         public DbSet<Product> Products { get; set; }
 
-        public DbSet<Customer> Customers { get; set; }
-
         public DbSet<AspNetUser> AspNetUsers { get; set; }
 
         public DbSet<Country> Countries { get; set; }

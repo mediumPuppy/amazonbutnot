@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace amazonbutnot.Migrations.ApplicationDb
+namespace amazonbutnot.Migrations
 {
     /// <inheritdoc />
-    public partial class scaryattempt2 : Migration
+    public partial class jobber12 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,7 +30,6 @@ namespace amazonbutnot.Migrations.ApplicationDb
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    customer_ID = table.Column<short>(type: "smallint", nullable: false),
                     first_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     last_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     birth_date = table.Column<DateTime>(type: "datetime2", nullable: false),

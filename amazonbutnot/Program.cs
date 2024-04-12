@@ -27,15 +27,10 @@ var productConnectionString = builder.Configuration.GetConnectionString("Product
 builder.Services.AddDbContext<ProductDbContext>(options =>
     options.UseSqlServer(productConnectionString));
 
-builder.Services.AddDefaultIdentity<Customer>(options =>
+builder.Services.AddDefaultIdentity<AspNetUser>(options =>
     {
         options.SignIn.RequireConfirmedAccount = false;
-        
-       
-        
         options.Password.RequiredLength = 9; // Minimum password length (this is what matters baby)
-        
-        
     })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -52,6 +47,9 @@ googleOptions.ClientSecret = builder.Configuration["Authentication:Google:Client
 builder.Services.AddScoped<IProductRepository, EFProductRepository>();
 // adding roles here
 builder.Services.AddScoped<IRolesRepository, EfRolesRepository>();
+//idk what this does bruv.
+builder.Services.AddScoped<IUserRepository, EfUserRepository>();
+
 
 // Session configuration
 builder.Services.AddSession(); // Add session services
