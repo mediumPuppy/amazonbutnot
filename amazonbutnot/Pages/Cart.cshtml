@@ -4,64 +4,89 @@
     Layout = "_Layout";
     ViewData["Title"] = "Cart"; 
 }
-<h2>Your Cart</h2>
 
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>Item</th>
-            <th>Quantity</th>
-            <th class="text-right">Price Per Unit</th>
-            <th class="text-right">Subtotal</th>
-            <th></th>
+<style>
+    .cart-container {
+        margin: 0 auto;
+        width: 80%;
+        max-width: 800px; /* Adjust as needed */
+    }
+    .cart-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .cart-table th, .cart-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    .cart-table th {
+        background-color: #f2f2f2;
+    }
+    .cart-table tfoot td {
+        font-weight: bold;
+    }
+    .cart-actions {
+        text-align: center;
+        margin-top: 20px;
+    }
+</style>
 
-        </tr>
+<div class="cart-container">
+    <h2>Your Cart</h2>
 
-    </thead>
-
-    <tbody>
-        @foreach (var l in Model.Cart?.Lines ?? Enumerable.Empty<Cart.CartLine>())
-        {
+    <table class="cart-table">
+        <thead>
             <tr>
-                <td class="text-left">@l.Product.name</td>
-                <td class="text-center">@l.Quantity</td>
-                <td class="text-right">@((l.Product.price).ToString("c"))</td>
-                <td class="text-right">@((l.Quantity * l.Product.price).ToString("c"))</td>
-                <td class="text-center">
-                    <form asp-page-handler="Remove" method="post">
-                        <input type="hidden" name="product_ID" value="@l.Product.product_ID" />
-                        <input type="hidden" name="returnUrl" value="@Model?.ReturnUrl" />
-                        <button type="submit" class="btn btn-sm btn-danger">Remove</button>
-                    </form>
-                </td>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th class="text-right">Price Per Unit</th>
+                <th class="text-right">Subtotal</th>
+                <th></th>
             </tr>
+        </thead>
 
-        }
+        <tbody>
+            @foreach (var l in Model.Cart?.Lines ?? Enumerable.Empty<Cart.CartLine>())
+            {
+                <tr>
+                    <td>
+                        @l.Product.name
+                        --
+                        <img src="@l.Product.img_link" alt="@l.Product.name" style="max-width: 100px; max-height: 100px;" />
+                    </td>
 
-    </tbody>
+                    <td>@l.Quantity</td>
+                    <td class="text-right">@((l.Product.price).ToString("c"))</td>
+                    <td class="text-right">@((l.Quantity * l.Product.price).ToString("c"))</td>
+                    <td class="text-center">
+                        <form asp-page-handler="Remove" method="post">
+                            <input type="hidden" name="product_ID" value="@l.Product.product_ID" />
+                            <input type="hidden" name="returnUrl" value="@Model?.ReturnUrl" />
+                            <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
 
-    <tfoot>
-        <tr>
-            <td colspan="3" class="text-right">Total:</td>
-            <td class="text-right">@Model.Cart?.CalculateTotal().ToString("c")</td>
-        </tr>
-    </tfoot>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-right">Total:</td>
+                <td class="text-right">@Model.Cart?.CalculateTotal().ToString("c")</td>
+            </tr>
+        </tfoot>
+    </table>
 
-</table>
+    <div class="cart-actions">
+        <!-- Existing Return to Products Button -->
+        <a class="btn btn-subtle-black" href="@Model.ReturnUrl" style="margin-right: 10px;">Return to Products</a>
 
-
-
-<div class="text-center">
-    <!-- Existing Return to Products Button -->
-    <a class="btn btn-subtle-black" href="@Model.ReturnUrl" style="margin-right: 10px;">Return to Products</a>
-    
-    <!-- New Checkout Button -->
-    <div class="form-box" style="display: inline-block;">
-        <form asp-action="Predict" asp-controller="Home" asp-route-amount="@Model.Cart?.CalculateTotal()" method="post">
-            <input type="submit" value="Checkout"/>
-        </form>
+        <!-- New Checkout Button -->
+        <div class="form-box" style="display: inline-block;">
+            <form asp-action="Predict" asp-controller="Home" asp-route-amount="@Model.Cart?.CalculateTotal()" method="post">
+                <button type="submit" class="btn btn-success">Checkout</button>
+            </form>
+        </div>
     </div>
 </div>
-
-
-
