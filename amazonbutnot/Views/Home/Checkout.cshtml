@@ -3,17 +3,30 @@
 *@
 @{
 }
+<style>
+    .jumbotron {
+        background-color: #f8f9fa; /* Set background color to light gray */
+        margin-bottom: 0; /* Remove bottom margin to prevent extra space */
+    }
 
+    .text-center {
+        margin-top: 20px; /* Add margin to top */
+    }
 
+</style>
 
 <div class="container">
-    <div class="jumbotron">
+    <div class="jumbotron bg-light text-center">
         @if (ViewBag != null)
         {
-            // Display the ViewBag.Prediction
+            <!-- Display the ViewBag.Prediction -->
             <h1 class="display-3">@ViewBag.Prediction</h1>
-
         }
+        <br />
         <a class="btn btn-subtle-black" asp-area="" asp-controller="Home" asp-action="Index">Return Home</a>
+        <br />
+    </div>
+    <div class="text-center">
+        <img src="~/img/lego3.gif" class="img-fluid" style="background-color:lightgrey" alt="lego_gif" />
     </div>
 </div>
