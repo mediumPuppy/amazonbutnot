@@ -27,7 +27,16 @@ var productConnectionString = builder.Configuration.GetConnectionString("Product
 builder.Services.AddDbContext<ProductDbContext>(options =>
     options.UseSqlServer(productConnectionString));
 
-builder.Services.AddDefaultIdentity<Customer>(options => options.SignIn.RequireConfirmedAccount = false)
+builder.Services.AddDefaultIdentity<Customer>(options =>
+    {
+        options.SignIn.RequireConfirmedAccount = false;
+        
+       
+        
+        options.Password.RequiredLength = 9; // Minimum password length (this is what matters baby)
+        
+        
+    })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
