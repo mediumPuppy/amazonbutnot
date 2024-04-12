@@ -109,7 +109,7 @@ app.Use(async (ctx, next) =>
         "script-src 'self' https://code.jquery.com https://stackpath.bootstrapcdn.com; " + // Allow scripts from jQuery CDN and Bootstrap CDN
         "font-src 'self' https://stackpath.bootstrapcdn.com; " + // Allow fonts from Bootstrap CDN
         "img-src 'self' data: https:;"); // Allow images from data URLs and HTTPS sources
-    await next();
+await next();
 });
 
 // Add session middleware
