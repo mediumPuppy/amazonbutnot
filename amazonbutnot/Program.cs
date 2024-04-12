@@ -87,6 +87,18 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+//CSP header stuff
+//app.Use(async (ctx, next) =>
+//{
+//    ctx.Response.Headers.Add("Content-Security-Policy",
+//        "default-src 'self'; " +
+//        "style-src 'self' https://stackpath.bootstrapcdn.com; " + // Allow inline styles and stylesheets from Bootstrap CDN
+//        "script-src 'self' https://code.jquery.com https://stackpath.bootstrapcdn.com; " + // Allow scripts from jQuery CDN and Bootstrap CDN
+//        "font-src 'self' https://stackpath.bootstrapcdn.com; " + // Allow fonts from Bootstrap CDN
+//        "img-src 'self' data: https:;"); // Allow images from data URLs and HTTPS sources
+//    await next();
+//});
+
 // Add session middleware
 app.UseSession();
 
