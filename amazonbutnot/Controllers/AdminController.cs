@@ -166,7 +166,7 @@ public class AdminController : Controller
     
     
 // DELETE USER (ADMIN ROLE) BELOW-----------------------
-    [HttpGet]
+    [HttpPost]
     public async Task<IActionResult> DeleteUser(string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);  
@@ -318,4 +318,20 @@ public class AdminController : Controller
         return View(model);
     }
 
+    public async Task<IActionResult> DeleteConfirm(string userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        var viewModel = new UserManagementViewModel
+        {
+            UserId = user.Id,
+            Email = user.Email
+        };
+
+        return View(viewModel);
+    }
 }
