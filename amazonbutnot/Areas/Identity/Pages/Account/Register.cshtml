@@ -1,14 +1,16 @@
 ﻿@page
 @model RegisterModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Make an Account!";
 }
 
-<h1>@ViewData["Title"]</h1>
 <div class="container">
+    
     <div class="row">
         <div class="col-md-8 offset-md-2">
-            <h2>Create a new account.</h2>
+<h1>@ViewData["Title"]</h1>
+            
+            <h2>Register</h2>
             <hr/>
             <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
                 <div class="row">
@@ -19,7 +21,7 @@
                             <label asp-for="Input.first_name">First Name</label>
                             <span asp-validation-for="Input.first_name" class="text-danger"></span>
                         </div>
-                        
+
                         <div class="form-floating mb-3">
                             <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com"/>
                             <label asp-for="Input.Email">Email</label>
@@ -35,7 +37,7 @@
                             <label asp-for="Input.ConfirmPassword">Confirm Password</label>
                             <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                         </div>
-<button id="registerSubmit" type="submit" class="w-100 btn btn-lg text-white" style="height: 58px; background-color: #3E3A3A;">Register</button>
+                        <button id="registerSubmit" type="submit" class="w-100 btn btn-lg text-white" style="height: 58px; background-color: #3E3A3A;">Register</button>
                     </div>
                     <!-- Column 2 -->
                     <div class="col-md-6">

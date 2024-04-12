@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] | Aurora's Lego</title>
+@* <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> *@
     <link rel="icon" href="~/legofavicon.ico" type="image/x-icon"> <!-- Add this line for the favicon -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -49,7 +50,7 @@
         </nav>
     </header>
 
-<main role="main" class="pb-3" style="margin: 0; padding: 0;">
+<main role="main"  style="min-height:calc(100vh - 70px)" class="pb-3" style="margin: 0; padding: 0;">
     @RenderBody()
 </main>
 

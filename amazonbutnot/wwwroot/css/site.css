@@ -2,6 +2,9 @@ html {
   font-size: 14px;
 }
 
+/*j*/
+
+
 @media (min-width: 768px) {
   html {
     font-size: 16px;
@@ -100,4 +103,15 @@ body {
 .btn-primary:hover {
     background-color: black;
     border-color: black;
+}
+
+.margins {
+    padding-left: 20px;
+}
+
+a {
+    color:black;
+}
+a:hover {
+    color:#3e3a3a;
 }
