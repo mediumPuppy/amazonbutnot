@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using amazonbutnot.Data;
 using amazonbutnot.Models;
 using Microsoft.ML.OnnxRuntime;
+using amazonbutnot.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -93,6 +94,9 @@ app.UseStaticFiles();
 app.UseCookiePolicy();
 
 app.UseRouting();
+
+//Our extra security feature
+app.UseMiddleware<RateLimitMiddleware>();
 
 app.UseAuthorization();
 
