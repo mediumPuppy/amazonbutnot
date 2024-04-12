@@ -27,7 +27,7 @@ public class RateLimitMiddleware
             requestCount = 0;
         }
 
-        if (requestCount >= 200) // Example: Allow up to 200 requests per hour
+        if (requestCount >= 100000) // Example: Allow up to 200 requests per hour
         {
             context.Response.StatusCode = StatusCodes.Status429TooManyRequests;
             await context.Response.WriteAsync("Rate limit exceeded. Please try again later.");
