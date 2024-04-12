@@ -31,12 +31,22 @@ public class AdminController : Controller
     [HttpGet]
     public IActionResult AdminIndex()
     {
+        if (!User.IsInRole("admin"))
+        {
+            // Redirect to a specific route or page for unauthorized access
+            return RedirectToPage("/Account/Login", new { area = "Identity" });
+        }
         return View();
     }
 
     [HttpGet]
     public async Task<IActionResult> UserRoles()
     {
+        if (!User.IsInRole("admin"))
+        {
+            // Redirect to a specific route or page for unauthorized access
+            return RedirectToPage("/Account/Login", new { area = "Identity" });
+        }
         var roles = await _roleManager.Roles.ToListAsync();
         var viewModel = new RoleManagementViewModel
         {
@@ -47,6 +57,11 @@ public class AdminController : Controller
 
     public async Task<IActionResult> UpdateRole(string roleId, string newName)
     {
+        if (!User.IsInRole("admin"))
+        {
+            // Redirect to a specific route or page for unauthorized access
+            return RedirectToPage("/Account/Login", new { area = "Identity" });
+        }
         // Find the role by ID
         var role = await _roleManager.FindByIdAsync(roleId);
         if (role == null)
@@ -110,6 +125,11 @@ public class AdminController : Controller
 
     public async Task<IActionResult> EditRole(string roleId)
     {
+        if (!User.IsInRole("admin"))
+        {
+            // Redirect to a specific route or page for unauthorized access
+            return RedirectToPage("/Account/Login", new { area = "Identity" });
+        }
         var role = await _roleManager.FindByIdAsync(roleId);
         if (role == null)
         {
@@ -144,6 +164,11 @@ public class AdminController : Controller
 
     public async Task<IActionResult> DeleteRole(string roleId)
     {
+        if (!User.IsInRole("admin"))
+        {
+            // Redirect to a specific route or page for unauthorized access
+            return RedirectToPage("/Account/Login", new { area = "Identity" });
+        }
         var role = await _roleManager.FindByIdAsync(roleId);
         if (role != null)
         {
@@ -169,6 +194,11 @@ public class AdminController : Controller
     [HttpGet]
     public async Task<IActionResult> DeleteUser(string userId)
     {
+        if (!User.IsInRole("admin"))
+        {
+            // Redirect to a specific route or page for unauthorized access
+            return RedirectToPage("/Account/Login", new { area = "Identity" });
+        }
         var user = await _userManager.FindByIdAsync(userId);  
         if (user != null)
         {
@@ -190,6 +220,11 @@ public class AdminController : Controller
     // FIND EDIT USER MANAGEMENT BELOW ------------------------------
     public async Task<IActionResult> UserManagement(int pageNum = 1)
     {
+        if (!User.IsInRole("admin"))
+        {
+            // Redirect to a specific route or page for unauthorized access
+            return RedirectToPage("/Account/Login", new { area = "Identity" });
+        }
         int pageSize = 10; // Number of items per page
 
         var totalItems = await _userManager.Users.CountAsync();
@@ -216,6 +251,11 @@ public class AdminController : Controller
     [HttpGet]
     public IActionResult AddUser()
     {
+        if (!User.IsInRole("admin"))
+        {
+            // Redirect to a specific route or page for unauthorized access
+            return RedirectToPage("/Account/Login", new { area = "Identity" });
+        }
         var model = new UserManagementViewModel();
         return View(model);
     }
@@ -252,6 +292,11 @@ public class AdminController : Controller
     [HttpGet]
     public async Task<IActionResult> EditUser(string userId)
     {
+        if (!User.IsInRole("admin"))
+        {
+            // Redirect to a specific route or page for unauthorized access
+            return RedirectToPage("/Account/Login", new { area = "Identity" });
+        }
         var user = await _userManager.FindByIdAsync(userId);
         if (user == null) return NotFound();
 

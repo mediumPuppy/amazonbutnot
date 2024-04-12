@@ -196,7 +196,7 @@ public class HomeController : Controller
         }
 
         var country_isUK = 0;
-        // Dictionary mapping the numeric prediction to an animal type
+        // Dictionary mapping the numeric prediction to a response message based on if its suspected fraud
         var class_type_dict = new Dictionary<int, string>
         {
             { 0, "Thank you for your purchase!" },
@@ -243,13 +243,13 @@ public class HomeController : Controller
                 }
                 else
                 {
-                    ViewBag.Prediction = "Error: Unable to make a prediction.";
+                    ViewBag.Prediction = "Thank you.";
                 }
             }
         }
         catch (Exception ex)
         {
-            ViewBag.Prediction = "Error during prediction.";
+            ViewBag.Prediction = "Thank you!";
         }
 
         // Clear the cart after the checkout process
