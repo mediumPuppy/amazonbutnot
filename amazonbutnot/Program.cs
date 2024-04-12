@@ -4,6 +4,8 @@ using amazonbutnot.Data;
 using amazonbutnot.Models;
 using Microsoft.ML.OnnxRuntime;
 using amazonbutnot.Middleware;
+using amazonbutnot.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +32,7 @@ builder.Services.AddDbContext<ProductDbContext>(options =>
 
 builder.Services.AddDefaultIdentity<Customer>(options =>
     {
-        options.SignIn.RequireConfirmedAccount = false;
+        options.SignIn.RequireConfirmedAccount = true;
         
        
         
@@ -75,7 +77,8 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
     options.CheckConsentNeeded = context => true; // Requires consent for non-essential cookies
     options.MinimumSameSitePolicy = SameSiteMode.None;
 });
-
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

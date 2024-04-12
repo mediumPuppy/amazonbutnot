@@ -43,6 +43,8 @@ namespace amazonbutnot.Areas.Identity.Pages.Account
         public InputModel Input { get; set; }
 
         public string ReturnUrl { get; set; }
+        
+        public string ErrorMessageHtml { get; set; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
@@ -105,65 +107,78 @@ namespace amazonbutnot.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            var emailAlreadyExists = await _userManager.FindByEmailAsync(Input.Email);
+            
             if (ModelState.IsValid)
             {
-                Customer user = CreateUser();
-
-                user.first_name = Input.first_name;
-                user.last_name = Input.last_name;
-                user.birth_date = Input.birth_date;
-                user.country_ID = Input.country_ID;
-                user.age = Input.age;
-                user.gender = Input.gender;
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-                var result = await _userManager.CreateAsync(user, Input.Password);
-
-                if (result.Succeeded)
+                if (emailAlreadyExists != null)
                 {
-                    _logger.LogInformation("User created a new account with password.");
+                    ModelState.AddModelError("Input.Email", "This email is already in use!");
+                    return Page(); // Return to the registration page with the error message displayed.
+                }
+                
+                    Customer user = CreateUser();
 
-                    var userId = await _userManager.GetUserIdAsync(user);
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
+                    user.first_name = Input.first_name;
+                    user.last_name = Input.last_name;
+                    user.birth_date = Input.birth_date;
+                    user.country_ID = Input.country_ID;
+                    user.age = Input.age;
+                    user.gender = Input.gender;
+                    await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                    await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                    var result = await _userManager.CreateAsync(user, Input.Password);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                    if (result.Succeeded)
                     {
-                        
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                    }
-                    else
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        _logger.LogInformation("User created a new account with password.");
 
-                        // Assign "Customer" role to the user
-                        var roleExists = await _roleManager.RoleExistsAsync("customer");
-                        if (!roleExists)
+                        var userId = await _userManager.GetUserIdAsync(user);
+                        var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                        code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                        var callbackUrl = Url.Page(
+                            "/Account/ConfirmEmail",
+                            pageHandler: null,
+                            values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
+                            protocol: Request.Scheme);
+
+                        await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                        if (_userManager.Options.SignIn.RequireConfirmedAccount)
                         {
-                            await _roleManager.CreateAsync(new IdentityRole("customer"));
-                        }
-                        await _userManager.AddToRoleAsync(user, "customer");
 
-                        return LocalRedirect(returnUrl);
+                            return RedirectToPage("RegisterConfirmation",
+                                new { email = Input.Email, returnUrl = returnUrl });
+                        }
+                        else
+                        {
+                            await _signInManager.SignInAsync(user, isPersistent: false);
+
+                            // Assign "Customer" role to the user
+                            var roleExists = await _roleManager.RoleExistsAsync("customer");
+                            if (!roleExists)
+                            {
+                                await _roleManager.CreateAsync(new IdentityRole("customer"));
+                            }
+
+                            await _userManager.AddToRoleAsync(user, "customer");
+
+                            return LocalRedirect(returnUrl);
+                        }
+                    }
+
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
                     }
                 }
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
-            }
+            
 
-            // If we got this far, something failed, redisplay form
-            return Page();
+                // If we got this far, something failed, redisplay form
+                return Page();
         }
+        
 
         private Customer CreateUser()
         {

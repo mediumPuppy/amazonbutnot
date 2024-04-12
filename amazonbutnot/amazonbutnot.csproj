@@ -25,6 +25,7 @@
     <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.17.3" />
     <PackageReference Include="Microsoft.ML.Recommender" Version="0.20.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
+    <PackageReference Include="SendGrid" Version="9.29.3" />
   </ItemGroup>
   <ItemGroup>
     <None Update="fraud_model_final.onnx">
